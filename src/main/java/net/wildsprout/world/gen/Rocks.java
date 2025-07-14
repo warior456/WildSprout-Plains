@@ -17,97 +17,97 @@ public class Rocks extends Feature<DefaultFeatureConfig> {
         super(configCodec);
     }
 
-    public boolean isNotValidBlock(FeatureContext<DefaultFeatureConfig> context,BlockPos blockPos){
-        return true;
-    }
+    @Override
+    public boolean generate(FeatureContext<DefaultFeatureConfig> context) {
+        System.out.println("Generating rocks");
 
-    public void generateMushroomCap(FeatureContext<DefaultFeatureConfig> context,BlockPos blockPos, int radius){
-        StructureWorldAccess structureWorldAccess = context.getWorld();
-
-        Iterable<BlockPos> blockPosIterable = BlockPos.iterateOutwards(new BlockPos( Math.round(blockPos.getX()), Math.round(blockPos.getY()), Math.round(blockPos.getZ())), radius, 0, radius);
-        blockPosIterable.forEach(blockPos1 -> {
-            int distance = (int) ((blockPos1.getX() - blockPos.getX())*(blockPos1.getX() - blockPos.getX()) + (blockPos1.getY() - blockPos.getY())*(blockPos1.getY() - blockPos.getY()) + (blockPos1.getZ() - blockPos.getZ())*(blockPos1.getZ() - blockPos.getZ()));
-            if(distance <= radius*radius+1){
-                if(!isNotValidBlock(context,blockPos1)){
-                    this.setBlockState(structureWorldAccess, blockPos1, Blocks.STONE.getDefaultState());
-                }
-            }
-        });
-    }
-    public boolean generateMushroomStem(FeatureContext<DefaultFeatureConfig> context,BlockPos blockPos,int splitchance){
+        BlockPos blockPos = context.getOrigin();
 
         Random random = context.getRandom();
         StructureWorldAccess structureWorldAccess = context.getWorld();
-
-        int heightunderSplit = random.nextBetween(1,2);
-        boolean split = random.nextBetween(1,100) <= splitchance;
-        int splitLenghtmain = random.nextBetween(1,2);
-        int splitLenghtside = random.nextBetween(1,1);
-        boolean splitLenghtsideAdd1toheight = random.nextBetween(0,1) == 0;
-        boolean splitDirection = random.nextBetween(0,1) == 0;
-        int splitDirectionPosNeg = random.nextBetween(0,1) == 0? -1 : 1;
-
-        if(isNotValidBlock(context,blockPos)) return false;
-        this.setBlockState(structureWorldAccess, blockPos, Blocks.STONE.getDefaultState());
+        /*while (structureWorldAccess.isAir(blockPos) && blockPos.getY() > structureWorldAccess.getBottomY() + 2) {//downwards raycast
+            blockPos = blockPos.down();
+        }*/
+        //raycast down 20 blocks
         int i = 0;
-        while(i < heightunderSplit){
-            blockPos = blockPos.up();
-            if(isNotValidBlock(context,blockPos)) return false;
-            this.setBlockState(structureWorldAccess, blockPos, Blocks.STONE.getDefaultState());
+        while(i < 10 && !context.getWorld().getBlockState(blockPos).isOf(Blocks.DIRT)) {
+            blockPos = blockPos.down();
             i++;
         }
-        if (split) {
-            BlockPos blockPos1 = blockPos;
-            i = 0;
-            while(i < splitLenghtmain){
-                blockPos = blockPos.up();
-                if(splitDirection) {
-                    blockPos = blockPos.east(splitDirectionPosNeg);
-                }
-                else {
-                    blockPos = blockPos.north(splitDirectionPosNeg);
-                }
-                if(isNotValidBlock(context,blockPos)) return false;
-                this.setBlockState(structureWorldAccess, blockPos, Blocks.STONE.getDefaultState());
-                i++;
-            }
-            if(isNotValidBlock(context,blockPos.up())) return false;
-            generateMushroomStem(context,blockPos.up(), splitchance * 7/12);
 
-            i = 0;
-            while(i < splitLenghtside){
-                blockPos1 = blockPos1.up();
-                if(splitDirection) {
-                    blockPos1 = blockPos1.east(-splitDirectionPosNeg);
+        if (!context.getWorld().getBlockState(blockPos.down()).isOf(Blocks.DIRT)) return false;
+
+        //config
+        int topOffsetRange = random.nextInt(10); //xz coordinaterange
+        int maxHeight = random.nextInt(50) + 70; //height of spike
+
+        int xTopOffset = random.nextBetween(-topOffsetRange, topOffsetRange);//x pos of top
+        int zTopOffset = random.nextBetween(-topOffsetRange, topOffsetRange);//z pos of top
+
+        Vec3d relativeVector = new Vec3d(xTopOffset, maxHeight, zTopOffset);//vector in the direction of the center line of blocks (base to top)
+        Vec3d normalized3dVector = relativeVector.normalize(); //used for moving setblock one step at a time
+        final int totalLength = (int) relativeVector.length();
+
+        int length = totalLength;
+        int radiusSetting = random.nextInt(5)+4; //radius first step of calculation, random for variation in same length spikes
+
+        double x = blockPos.getX();
+        double y = blockPos.getY()-30;
+        double z = blockPos.getZ();
+        //if top in stone => not generate
+        if (!context.getWorld().getBlockState(new BlockPos((int)Math.round(x + relativeVector.x) ,(int)Math.round(y + relativeVector.y), (int)Math.round(z + relativeVector.z))).isOf(Blocks.AIR)) return false;
+
+        int spawnCrux = random.nextInt(100);
+        int j = 0;
+        while (length - j>0){
+            int radius = radiusSetting;
+
+            //non rounded tracking of coordinates
+            //nextstep
+            x = x + normalized3dVector.getX();
+            y = y + normalized3dVector.getY();
+            z = z + normalized3dVector.getZ();
+
+            int radiusSquared = radius * radius;
+            Iterable<BlockPos> blockPosIterable = BlockPos.iterateOutwards(new BlockPos( (int)Math.round(x), (int)Math.round(y), (int)Math.round(z)), radius, 1, radius);
+            double finalX = x;
+            double finalY = y;
+            double finalZ = z;
+            blockPosIterable.forEach(blockPos1 -> {
+                int distance = (int) ((blockPos1.getX() - finalX)*(blockPos1.getX() - finalX) + ((blockPos1.getY() - finalY)/1)*((blockPos1.getY() - finalY)/1) + (blockPos1.getZ() - finalZ)*(blockPos1.getZ() - finalZ));
+                if (distance <= radiusSquared) {//ball instead of rectangle
+                    this.setBlockState(structureWorldAccess, blockPos1, Blocks.STONE.getDefaultState());
                 }
-                else {
-                    blockPos1 = blockPos1.north(-splitDirectionPosNeg);
+            });
+            if (j > 40){
+                if (random.nextInt(10) == 0){
+                    int angleTopOffset =  random.nextBetween(0, 360);
+                    int holeX = (int)Math.round(Math.cos(Math.toRadians(angleTopOffset))*radius);
+                    int holeZ = (int)Math.round(Math.sin(Math.toRadians(angleTopOffset))*radius);
+
+                    int holeRadius = random.nextInt((int)(radius/4))+2;
+
+                    int finalX2 = (int)Math.round(x+holeX);
+                    int finalY2 = (int)Math.round(y-5);
+                    int finalZ2 = (int)Math.round(z+holeZ);
+
+                    Iterable<BlockPos> blockPosIterable2 = BlockPos.iterateOutwards(new BlockPos( (int)Math.round(finalX2), (int)Math.round(finalY2), (int)Math.round(finalZ2)), (holeRadius*2) + 2, holeRadius+1, (holeRadius*2) + 2);
+
+                    blockPosIterable2.forEach(blockPos2 -> {
+                        int distance = (int) (((blockPos2.getX() - finalX2)/2)*((blockPos2.getX() - finalX2)/2) + ((blockPos2.getY() - finalY2)/1)*((blockPos2.getY() - finalY2)/1) + ((blockPos2.getZ() - finalZ2)/2)*((blockPos2.getZ() - finalZ2)/2));
+                        if (Math.round(distance) <= (holeRadius-1)*(holeRadius-1) && context.getWorld().getBlockState(blockPos2).isOf(Blocks.STONE)) {//ball instead of rectangle
+                            this.setBlockState(structureWorldAccess, blockPos2, Blocks.AIR.getDefaultState());
+                        }
+                        else if (Math.round(distance) <= holeRadius*holeRadius && context.getWorld().getBlockState(blockPos2).isOf(Blocks.STONE) && random.nextInt(5) != 0) {//ball instead of rectangle
+                            this.setBlockState(structureWorldAccess, blockPos2, Blocks.GOLD_BLOCK.getDefaultState());
+                        }
+                    });
                 }
-                if(isNotValidBlock(context,blockPos1)) return false;
-                this.setBlockState(structureWorldAccess, blockPos1, Blocks.STONE.getDefaultState());
-                i++;
             }
-            if (splitLenghtsideAdd1toheight) {
-                blockPos1 = blockPos1.up();
-                if(isNotValidBlock(context,blockPos1)) return false;
-                this.setBlockState(structureWorldAccess, blockPos1, Blocks.STONE.getDefaultState());
-            }
-            if(isNotValidBlock(context,blockPos1.up())) return false;
-            generateMushroomCap(context, blockPos1.up(),1 );
-        }
-        else {
-            if(isNotValidBlock(context,blockPos.up())) return false;
-            generateMushroomCap(context, blockPos.up(),2 );
+            j++;
+
         }
         return true;
     }
 
-    @Override
-    public boolean generate(FeatureContext<DefaultFeatureConfig> context) {
-        BlockPos blockPos = context.getOrigin();
-        if (!context.getWorld().getBlockState(blockPos.down()).isOf(Blocks.STONE)) return false;
-
-        generateMushroomStem(context,blockPos,75);
-        return true;
-    }
 }

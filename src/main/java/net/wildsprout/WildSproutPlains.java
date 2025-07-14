@@ -27,8 +27,7 @@ public class WildSproutPlains implements ModInitializer {
 		// Proceed with mild caution.
 
 		LOGGER.info("Hello Fabric world!");
-
-		ModWorldGeneration.generateModWorldGen();
 		ModFeatures.init();
+		ModWorldGeneration.generateModWorldGen();
 	}
 }

@@ -1,18 +1,27 @@
 package net.wildsprout.world;
 
+import net.minecraft.block.Blocks;
+import net.minecraft.block.SweetBerryBushBlock;
 import net.minecraft.registry.Registerable;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.FeatureConfig;
+import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.stateprovider.BlockStateProvider;
 import net.wildsprout.WildSproutPlains;
+import net.wildsprout.world.gen.ModFeatures;
+import net.wildsprout.world.gen.Rocks;
+
+import java.util.List;
 
 public class ModConfiguredFeatures {
 
-    public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
+    public static final RegistryKey<ConfiguredFeature<?,?>> ROCKS_KEY = registerKey("rocks");
 
+
+
+    public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
+        register(context,ROCKS_KEY, ModFeatures.ROCKS, new DefaultFeatureConfig());
 
     }
 
