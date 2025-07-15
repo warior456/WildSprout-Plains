@@ -20,11 +20,6 @@ public class ModWorldGeneration {
 
 
         // REMOVE FEATURES
-        BiomeModifications.create(WildSproutPlains.identifier("no_grass_patches")).add( ModificationPhase.REMOVALS,BiomeSelectors.includeByKey(BiomeKeys.PLAINS),
-                context -> {
-                    context.getGenerationSettings().removeFeature(
-                            GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.PATCH_GRASS_PLAIN);});
-
         BiomeModifications.create(WildSproutPlains.identifier("no_lava_spring")).add( ModificationPhase.REMOVALS,BiomeSelectors.includeByKey(BiomeKeys.PLAINS),
                 context -> {
                     context.getGenerationSettings().removeFeature(
