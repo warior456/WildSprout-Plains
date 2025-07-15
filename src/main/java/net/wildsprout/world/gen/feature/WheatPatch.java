@@ -15,6 +15,7 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
+import net.wildsprout.tags.ModTags;
 
 import java.util.Arrays;
 import java.util.Properties;
@@ -48,6 +49,7 @@ public class WheatPatch extends Feature<DefaultFeatureConfig> {
 
                 if (!(structureWorldAccess.getBiome(pos).getKey().get() ==  BiomeKeys.PLAINS)) continue;
                 if (!(structureWorldAccess.getBlockState(pos.down()).equals(Blocks.GRASS_BLOCK.getDefaultState()))) continue;
+                if (!(structureWorldAccess.getBlockState(pos).isIn(ModTags.Blocks.CAN_BE_REPLACED))) continue;
 
                 double mainSample = mainNoise.sample(pos.getX(), pos.getY(), pos.getZ());
                 if (mainSample > 0.1 || mainSample < -0.1) continue;

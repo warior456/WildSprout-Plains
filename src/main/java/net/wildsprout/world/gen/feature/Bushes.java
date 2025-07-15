@@ -14,6 +14,7 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
+import net.wildsprout.tags.ModTags;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,7 @@ public class Bushes extends Feature<DefaultFeatureConfig> {
 
         List<BlockPos> bushPlacements = getBushPlacements(random, structureWorldAccess, center);
         for (BlockPos pos : bushPlacements) {
-            if (!(structureWorldAccess.getBlockState(center.down()).equals(Blocks.GRASS_BLOCK.getDefaultState()))) continue;
+            if (!(structureWorldAccess.getBlockState(pos.down()).equals(Blocks.GRASS_BLOCK.getDefaultState()))) continue;
             setBlockState(structureWorldAccess, pos, Blocks.OAK_LOG.getDefaultState());
 
 
@@ -48,7 +49,7 @@ public class Bushes extends Feature<DefaultFeatureConfig> {
 
                 // Carve a rough sphere
                 if (distance <= radius * radius + noise.sample(pos2.getX(), pos2.getY(), pos2.getZ())*0.75+0.75) {
-                    if (structureWorldAccess.getBlockState(pos2).equals(Blocks.AIR.getDefaultState())){
+                    if (structureWorldAccess.getBlockState(pos2).isIn(ModTags.Blocks.CAN_BE_REPLACED)){
                         BlockState block = Blocks.OAK_LEAVES.getDefaultState().with(LeavesBlock.DISTANCE, 1);
                         structureWorldAccess.setBlockState(pos2, block,2);
                     }

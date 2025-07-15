@@ -13,6 +13,7 @@ import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
+import net.wildsprout.tags.ModTags;
 
 public class Rocks extends Feature<DefaultFeatureConfig> {
 
@@ -57,9 +58,9 @@ public class Rocks extends Feature<DefaultFeatureConfig> {
             double distance = center.getSquaredDistance(pos);
 
             if (distance <= radius * radius + noise.sample(pos.getX(), pos.getY(), pos.getZ())+0.7) {
-                if (structureWorldAccess.getBlockState(pos).equals(Blocks.AIR.getDefaultState()) &&
-                        !(structureWorldAccess.getBlockState(pos.down()).equals(Blocks.AIR.getDefaultState())) &&
-                        structureWorldAccess.getBlockState(pos.up()).equals(Blocks.AIR.getDefaultState())){
+                if (structureWorldAccess.getBlockState(pos).isIn(ModTags.Blocks.CAN_BE_REPLACED) &&
+                        !(structureWorldAccess.getBlockState(pos.down()).isIn(ModTags.Blocks.CAN_BE_REPLACED)) &&
+                        structureWorldAccess.getBlockState(pos.up()).isIn(ModTags.Blocks.CAN_BE_REPLACED)){
                     BlockState block = Blocks.STONE_SLAB.getDefaultState();
                     structureWorldAccess.setBlockState(pos, block,2);
                 }
