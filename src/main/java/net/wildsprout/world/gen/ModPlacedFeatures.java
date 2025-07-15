@@ -17,6 +17,7 @@ public class ModPlacedFeatures {
     public static final RegistryKey<PlacedFeature> ROCKS_PLACED_KEY = registerKey("rocks");
     public static final RegistryKey<PlacedFeature> WHEAT_PATCH_PLACED_KEY = registerKey("wheat_patch");
     public static final RegistryKey<PlacedFeature> DIRT_PATCH_PLACED_KEY = registerKey("dirt_patch");
+    public static final RegistryKey<PlacedFeature> CUSTOM_PLAINS_VEGETATION = registerKey("custom_plains_vegetation");
 
     public static void bootstrap(Registerable<PlacedFeature> context) {
         var configuredFeatures = context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE);
