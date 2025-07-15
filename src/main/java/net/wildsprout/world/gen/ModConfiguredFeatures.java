@@ -1,18 +1,11 @@
-package net.wildsprout.world;
+package net.wildsprout.world.gen;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.block.SweetBerryBushBlock;
 import net.minecraft.registry.Registerable;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.gen.feature.*;
-import net.minecraft.world.gen.stateprovider.BlockStateProvider;
 import net.wildsprout.WildSproutPlains;
-import net.wildsprout.world.gen.ModFeatures;
-import net.wildsprout.world.gen.Rocks;
-
-import java.util.List;
 
 public class ModConfiguredFeatures {
 

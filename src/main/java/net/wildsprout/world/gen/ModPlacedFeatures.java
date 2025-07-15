@@ -1,4 +1,4 @@
-package net.wildsprout.world;
+package net.wildsprout.world.gen;
 
 import net.minecraft.registry.Registerable;
 import net.minecraft.registry.RegistryKey;

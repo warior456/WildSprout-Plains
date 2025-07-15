@@ -5,6 +5,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.wildsprout.WildSproutPlains;
+import net.wildsprout.world.gen.feature.Rocks;
 
 public class ModFeatures {
     public static final Feature<DefaultFeatureConfig> ROCKS = new Rocks(DefaultFeatureConfig.CODEC);

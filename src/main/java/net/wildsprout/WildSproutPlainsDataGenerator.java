@@ -5,8 +5,8 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.minecraft.registry.RegistryBuilder;
 import net.minecraft.registry.RegistryKeys;
 import net.wildsprout.datagen.*;
-import net.wildsprout.world.ModConfiguredFeatures;
-import net.wildsprout.world.ModPlacedFeatures;
+import net.wildsprout.world.gen.ModConfiguredFeatures;
+import net.wildsprout.world.gen.ModPlacedFeatures;
 
 public class WildSproutPlainsDataGenerator implements DataGeneratorEntrypoint {
 	@Override
