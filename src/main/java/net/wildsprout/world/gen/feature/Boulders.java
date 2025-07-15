@@ -16,8 +16,6 @@ import net.minecraft.world.gen.feature.util.FeatureContext;
 
 public class Boulders extends Feature<DefaultFeatureConfig> {
 
-    private static final Direction[] DIRECTIONS = Direction.values();
-
     public Boulders(Codec<DefaultFeatureConfig> configCodec) {
         super(configCodec);
     }
