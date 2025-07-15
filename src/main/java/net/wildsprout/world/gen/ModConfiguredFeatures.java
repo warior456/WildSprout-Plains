@@ -1,20 +1,34 @@
 package net.wildsprout.world.gen;
 
+import net.minecraft.block.Blocks;
+import net.minecraft.block.SweetBerryBushBlock;
+import net.minecraft.block.TargetBlock;
 import net.minecraft.registry.Registerable;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.structure.rule.BlockMatchRuleTest;
+import net.minecraft.structure.rule.RuleTest;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.stateprovider.BlockStateProvider;
 import net.wildsprout.WildSproutPlains;
 
+import java.util.List;
+
 public class ModConfiguredFeatures {
-
+    //-------------------------
     public static final RegistryKey<ConfiguredFeature<?,?>> ROCKS_KEY = registerKey("rocks");
-
+    public static final RegistryKey<ConfiguredFeature<?,?>> DIRT_PATCH_KEY = registerKey("dirt_patch");
 
 
     public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
+
+        RuleTest isGrassBlockTest = new BlockMatchRuleTest(Blocks.GRASS_BLOCK);
+        //-------------------------
         register(context,ROCKS_KEY, ModFeatures.ROCKS, new DefaultFeatureConfig());
+
+        ConfiguredFeatures.register(context, DIRT_PATCH_KEY, Feature.ORE, new OreFeatureConfig(isGrassBlockTest, Blocks.COARSE_DIRT.getDefaultState(), 64));
 
     }
 
