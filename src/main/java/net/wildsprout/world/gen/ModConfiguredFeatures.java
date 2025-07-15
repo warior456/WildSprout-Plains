@@ -19,6 +19,7 @@ import java.util.List;
 public class ModConfiguredFeatures {
     //-------------------------
     public static final RegistryKey<ConfiguredFeature<?,?>> BOULDERS_KEY = registerKey("boulders");
+    public static final RegistryKey<ConfiguredFeature<?,?>> ROCKS_KEY = registerKey("rocks");
     public static final RegistryKey<ConfiguredFeature<?,?>> WHEAT_PATCH_KEY = registerKey("wheat_patch");
 
     public static final RegistryKey<ConfiguredFeature<?,?>> DIRT_PATCH_KEY = registerKey("dirt_patch");
@@ -29,6 +30,7 @@ public class ModConfiguredFeatures {
         RuleTest isGrassBlockTest = new BlockMatchRuleTest(Blocks.GRASS_BLOCK);
         //-------------------------
         register(context,BOULDERS_KEY, ModFeatures.BOULDERS, new DefaultFeatureConfig());
+        register(context,ROCKS_KEY, ModFeatures.ROCKS, new DefaultFeatureConfig());
         register(context,WHEAT_PATCH_KEY, ModFeatures.WHEAT_PATCH, new DefaultFeatureConfig());
 
         register(context, DIRT_PATCH_KEY, Feature.ORE, new OreFeatureConfig(isGrassBlockTest, Blocks.COARSE_DIRT.getDefaultState(), 64));

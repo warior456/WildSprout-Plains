@@ -30,15 +30,30 @@ public class Bushes extends Feature<DefaultFeatureConfig> {
         Random random = context.getRandom();
 
         ChunkRandom chunkRandom = new ChunkRandom(new CheckedRandom(structureWorldAccess.getSeed()));
+        DoublePerlinNoiseSampler noise = DoublePerlinNoiseSampler.create(chunkRandom, -2, new double[]{2});
+
         List<BlockPos> bushPlacements = getBushPlacements(random, structureWorldAccess, center);
         for (BlockPos pos : bushPlacements) {
             if (!(structureWorldAccess.getBlockState(center.down()).equals(Blocks.GRASS_BLOCK.getDefaultState()))) continue;
             setBlockState(structureWorldAccess, pos, Blocks.OAK_LOG.getDefaultState());
-            setBlockState(structureWorldAccess, pos.up(), Blocks.OAK_LEAVES.getDefaultState().with(LeavesBlock.DISTANCE, 1));
-            setBlockState(structureWorldAccess, pos.north(), Blocks.OAK_LEAVES.getDefaultState().with(LeavesBlock.DISTANCE, 1));
-            setBlockState(structureWorldAccess, pos.east(), Blocks.OAK_LEAVES.getDefaultState().with(LeavesBlock.DISTANCE, 1));
-            setBlockState(structureWorldAccess, pos.south(), Blocks.OAK_LEAVES.getDefaultState().with(LeavesBlock.DISTANCE, 1));
-            setBlockState(structureWorldAccess, pos.west(), Blocks.OAK_LEAVES.getDefaultState().with(LeavesBlock.DISTANCE, 1));
+
+
+            double radius = 1.3;
+
+
+
+            // Iterate a cube around the center
+            for (BlockPos pos2 : BlockPos.iterate(pos.add(-(int)Math.round(radius*2), -(int)Math.round(radius*2), -(int)Math.round(radius*2)), pos.add((int)Math.round(radius*2), (int)Math.round(radius*2), (int)Math.round(radius*2)))) {
+                double distance = pos.getSquaredDistance(pos2);
+
+                // Carve a rough sphere
+                if (distance <= radius * radius + noise.sample(pos2.getX(), pos2.getY(), pos2.getZ())*0.75+0.75) {
+                    if (structureWorldAccess.getBlockState(pos2).equals(Blocks.AIR.getDefaultState())){
+                        BlockState block = Blocks.OAK_LEAVES.getDefaultState().with(LeavesBlock.DISTANCE, 1);
+                        structureWorldAccess.setBlockState(pos2, block,2);
+                    }
+                }
+            }
 
 
 
