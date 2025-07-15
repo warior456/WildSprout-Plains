@@ -33,7 +33,8 @@ public class WheatPatch extends Feature<DefaultFeatureConfig> {
         int featureSize = 5;
 
         ChunkRandom chunkRandom = new ChunkRandom(new CheckedRandom(structureWorldAccess.getSeed()));
-        DoublePerlinNoiseSampler doublePerlinNoiseSampler = DoublePerlinNoiseSampler.create(chunkRandom, -10, new double[]{1.0, 0.0,1.0,4.0});
+        DoublePerlinNoiseSampler wheatPatchesNoise = DoublePerlinNoiseSampler.create(chunkRandom, -4, new double[]{1});
+        DoublePerlinNoiseSampler mainNoise = DoublePerlinNoiseSampler.create(chunkRandom, -9, new double[]{1,1});
         Chunk chunk = structureWorldAccess.getChunk(blockPos);
 
         int x = blockPos.getX();
@@ -48,9 +49,13 @@ public class WheatPatch extends Feature<DefaultFeatureConfig> {
                 if (!(structureWorldAccess.getBiome(pos).getKey().get() ==  BiomeKeys.PLAINS)) continue;
                 if (!(structureWorldAccess.getBlockState(pos.down()).equals(Blocks.GRASS_BLOCK.getDefaultState()))) continue;
 
-                double noiseSample = doublePerlinNoiseSampler.sample(pos.getX(), pos.getY(), pos.getZ()) - 0.5;
+                double mainSample = mainNoise.sample(pos.getX(), pos.getY(), pos.getZ());
+                if (mainSample > 0.1 || mainSample < -0.1) continue;
+
+                double noiseSample = wheatPatchesNoise.sample(pos.getX(), pos.getY(), pos.getZ());
                 if (chunkRandom.nextDouble() < noiseSample){
                     this.setBlockState(structureWorldAccess, pos, Blocks.WHEAT.getDefaultState().with(CropBlock.AGE, 7));
+                    this.setBlockState(structureWorldAccess, pos.down(), Blocks.FARMLAND.getDefaultState());
                 }
             }
         }
