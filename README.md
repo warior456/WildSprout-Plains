@@ -19,7 +19,7 @@ this mod is unreleased
 </details>
 
 ## License
-Please refer to the [LICENSE.md](https://github.com/warior456/WildSprout-Plains/blob/master/LICENSE) file for licensing details.
+Please refer to the [LICENSE.md](https://github.com/warior456/WildSprout-Plains/blob/master/LICENSE.md) file for licensing details.
 
 For any questions or issues, please reach out to us on our [GitHub repository](https://github.com/warior456/WildSprout-Plains) or our [Discord Server](https://discord.gg/dxANwW23Ub)
 
