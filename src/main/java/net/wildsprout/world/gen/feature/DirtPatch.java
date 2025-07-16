@@ -26,7 +26,7 @@ public class DirtPatch extends Feature<DefaultFeatureConfig> {
     public boolean generate(FeatureContext<DefaultFeatureConfig> context) {
         BlockPos blockPos = context.getOrigin();
         StructureWorldAccess structureWorldAccess = context.getWorld();
-
+        Random random = context.getRandom();
         int featureSize = 5;
 
         ChunkRandom chunkRandom = new ChunkRandom(new CheckedRandom(structureWorldAccess.getSeed()+1));
@@ -44,7 +44,7 @@ public class DirtPatch extends Feature<DefaultFeatureConfig> {
                 if (!(structureWorldAccess.getBlockState(pos).isIn(ModTags.Blocks.CAN_BE_REPLACED))) continue;
 
                 double noiseSample = dirtPatchesNoise.sample(pos.getX(), pos.getY(), pos.getZ());
-                if (chunkRandom.nextDouble() < noiseSample*10 -5){
+                if (random.nextDouble() < noiseSample*10 -5){
                     this.setBlockState(structureWorldAccess, pos, Blocks.COARSE_DIRT.getDefaultState());
                 }
             }
