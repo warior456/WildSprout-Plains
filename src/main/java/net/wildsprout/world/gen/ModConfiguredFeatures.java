@@ -24,6 +24,7 @@ public class ModConfiguredFeatures {
 
     public static final RegistryKey<ConfiguredFeature<?,?>> DIRT_PATCH_KEY = registerKey("dirt_patch");
     public static final RegistryKey<ConfiguredFeature<?,?>> BUSHES_KEY = registerKey("bushes");
+    public static final RegistryKey<ConfiguredFeature<?,?>> SMALL_RIVER_KEY = registerKey("small_river");
 
     public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
 
@@ -35,6 +36,8 @@ public class ModConfiguredFeatures {
 
         register(context, DIRT_PATCH_KEY, Feature.ORE, new OreFeatureConfig(isGrassBlockTest, Blocks.COARSE_DIRT.getDefaultState(), 64));
         register(context, BUSHES_KEY, ModFeatures.BUSHES, new DefaultFeatureConfig());
+        register(context, SMALL_RIVER_KEY, ModFeatures.SMALL_RIVER, new DefaultFeatureConfig());
+
     }
 
     public static RegistryKey<ConfiguredFeature<?, ?>> registerKey(String name) {

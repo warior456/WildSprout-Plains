@@ -2,9 +2,10 @@ package net.wildsprout;
 
 import net.fabricmc.api.ModInitializer;
 
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.wildsprout.world.gen.ModFeatures;
-import net.wildsprout.world.gen.ModWorldGeneration;
+import net.wildsprout.world.gen.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +29,13 @@ public class WildSproutPlains implements ModInitializer {
 
 		LOGGER.info("Hello Fabric world!");
 		ModFeatures.init();
+		ModStructureTypes.init();
+		ModStructurePieceTypes.init();
+		ModStructureKeys.init();
 		ModWorldGeneration.generateModWorldGen();
+
+
+
+		Registry.register(Registries.STRUCTURE_TYPE, WildSproutPlains.identifier("river"), ModStructureTypes.RIVER);
 	}
 }
