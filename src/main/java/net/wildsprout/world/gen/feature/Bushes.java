@@ -9,8 +9,6 @@ import net.minecraft.util.math.random.ChunkRandom;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.biome.BiomeKeys;
-import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
@@ -34,13 +32,18 @@ public class Bushes extends Feature<DefaultFeatureConfig> {
         DoublePerlinNoiseSampler noise = DoublePerlinNoiseSampler.create(chunkRandom, -2, new double[]{2});
 
         List<BlockPos> bushPlacements = getBushPlacements(random, structureWorldAccess, center);
+
+        List<Double> radiusOptions = List.of(0.9D, 1.2D, 1.3D);
         for (BlockPos pos : bushPlacements) {
             if (!(structureWorldAccess.getBlockState(pos.down()).equals(Blocks.GRASS_BLOCK.getDefaultState()))) continue;
-            setBlockState(structureWorldAccess, pos, Blocks.OAK_LOG.getDefaultState());
 
-
-            double radius = 1.3;
-
+            int bushSelector = random.nextBetween(0, radiusOptions.size() - 1);
+            if(bushSelector ==0){
+                setBlockState(structureWorldAccess, pos, Blocks.OAK_LEAVES.getDefaultState().with(LeavesBlock.PERSISTENT, true));
+            }else{
+                setBlockState(structureWorldAccess, pos, Blocks.OAK_LOG.getDefaultState());
+            }
+            double radius = radiusOptions.get(bushSelector);
 
 
             // Iterate a cube around the center
