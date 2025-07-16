@@ -4,9 +4,12 @@ A mod that improves the vanilla plains biome
 this mod is unreleased
 
 ## FEATURES
+- bushes that generate throughout the plains
+- small stones
+- boulders
+- wheat fields
+- coarse dirt patches
 
-
-Visit the wiki for more information about configuration and details (WIP)
 
 ## Screenshots
 
