@@ -33,6 +33,8 @@ public class Rocks extends Feature<DefaultFeatureConfig> {
 
         if (!(structureWorldAccess.getBlockState(center.down()).equals(Blocks.GRASS_BLOCK.getDefaultState()))) return false;
 
+        center = center.down();
+
 
         ChunkRandom chunkRandom = new ChunkRandom(new CheckedRandom(structureWorldAccess.getSeed()));
         DoublePerlinNoiseSampler noise = DoublePerlinNoiseSampler.create(chunkRandom, -2, new double[]{1});
@@ -47,6 +49,7 @@ public class Rocks extends Feature<DefaultFeatureConfig> {
 
             // Carve a rough sphere
             if (distance <= radius * radius + noise.sample(pos.getX(), pos.getY(), pos.getZ())) {
+                if (!structureWorldAccess.getBlockState(pos).isIn(ModTags.Blocks.CAN_BE_REPLACED)) continue;
                 BlockState block = Blocks.STONE.getDefaultState();
                 structureWorldAccess.setBlockState(pos, block,2);
             }
@@ -56,9 +59,9 @@ public class Rocks extends Feature<DefaultFeatureConfig> {
             double distance = center.getSquaredDistance(pos);
 
             if (distance <= radius * radius + noise.sample(pos.getX(), pos.getY(), pos.getZ())+0.7) {
-                if (structureWorldAccess.getBlockState(pos).isIn(ModTags.Blocks.CAN_BE_REPLACED) &&
-                        !(structureWorldAccess.getBlockState(pos.down()).isIn(ModTags.Blocks.CAN_BE_REPLACED)) &&
-                        structureWorldAccess.getBlockState(pos.up()).isIn(ModTags.Blocks.CAN_BE_REPLACED)){
+                if (structureWorldAccess.getBlockState(pos).isIn(ModTags.Blocks.CAN_BE_REPLACED_NON_SOLID) &&
+                        !(structureWorldAccess.getBlockState(pos.down()).isIn(ModTags.Blocks.CAN_BE_REPLACED_NON_SOLID)) &&
+                        structureWorldAccess.getBlockState(pos.up()).isIn(ModTags.Blocks.CAN_BE_REPLACED_NON_SOLID)){
                     BlockState block = Blocks.STONE_SLAB.getDefaultState();
                     structureWorldAccess.setBlockState(pos, block,2);
                 }

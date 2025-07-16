@@ -52,7 +52,7 @@ public class Bushes extends Feature<DefaultFeatureConfig> {
 
                 // Carve a rough sphere
                 if (distance <= radius * radius + noise.sample(pos2.getX(), pos2.getY(), pos2.getZ())*0.75+0.75) {
-                    if (structureWorldAccess.getBlockState(pos2).isIn(ModTags.Blocks.CAN_BE_REPLACED)){
+                    if (structureWorldAccess.getBlockState(pos2).isIn(ModTags.Blocks.CAN_BE_REPLACED_NON_SOLID)){
                         BlockState block = Blocks.OAK_LEAVES.getDefaultState().with(LeavesBlock.DISTANCE, 1);
                         structureWorldAccess.setBlockState(pos2, block,2);
                     }

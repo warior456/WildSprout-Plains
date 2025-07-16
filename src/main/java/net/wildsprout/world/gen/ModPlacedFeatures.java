@@ -27,8 +27,8 @@ public class ModPlacedFeatures {
         //-------------------------
         register(context,BOULDERS_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.BOULDERS_KEY), RarityFilterPlacementModifier.of(64), SquarePlacementModifier.of(), PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP, BiomePlacementModifier.of());
         register(context,ROCKS_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.ROCKS_KEY), RarityFilterPlacementModifier.of(4), SquarePlacementModifier.of(), PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP, BiomePlacementModifier.of());
-        register(context,DIRT_PATCH_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.DIRT_PATCH_KEY), RarityFilterPlacementModifier.of(16), SquarePlacementModifier.of(), PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP, BiomePlacementModifier.of());
         register(context,WHEAT_PATCH_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.WHEAT_PATCH_KEY), CountPlacementModifier.of(20), SquarePlacementModifier.of(), PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP, BiomePlacementModifier.of());
+        register(context,DIRT_PATCH_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.DIRT_PATCH_KEY), CountPlacementModifier.of(20), SquarePlacementModifier.of(), PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP, BiomePlacementModifier.of());
         register(context,BUSHES_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.BUSHES_KEY), RarityFilterPlacementModifier.of(16), SquarePlacementModifier.of(), PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP, BiomePlacementModifier.of());
         register(context,SMALL_RIVER_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.SMALL_RIVER_KEY), RarityFilterPlacementModifier.of(256), SquarePlacementModifier.of(), PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP, BiomePlacementModifier.of());
     }

@@ -13,9 +13,11 @@ public class ModTags {
 
     public static class Blocks {
 
+        public static final TagKey<Block> CAN_BE_REPLACED_NON_SOLID =
+                createTag("can_be_replaced_non_solid");
+
         public static final TagKey<Block> CAN_BE_REPLACED =
                 createTag("can_be_replaced");
-
 
         private static TagKey<Block> createTag(String name) {
             return TagKey.of(RegistryKeys.BLOCK, WildSproutPlains.identifier( name));

@@ -28,13 +28,11 @@ public class ModConfiguredFeatures {
 
     public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
 
-        RuleTest isGrassBlockTest = new BlockMatchRuleTest(Blocks.GRASS_BLOCK);
         //-------------------------
         register(context,BOULDERS_KEY, ModFeatures.BOULDERS, new DefaultFeatureConfig());
         register(context,ROCKS_KEY, ModFeatures.ROCKS, new DefaultFeatureConfig());
         register(context,WHEAT_PATCH_KEY, ModFeatures.WHEAT_PATCH, new DefaultFeatureConfig());
-
-        register(context, DIRT_PATCH_KEY, Feature.ORE, new OreFeatureConfig(isGrassBlockTest, Blocks.COARSE_DIRT.getDefaultState(), 64));
+        register(context,DIRT_PATCH_KEY, ModFeatures.DIRT_PATCH, new DefaultFeatureConfig());
         register(context, BUSHES_KEY, ModFeatures.BUSHES, new DefaultFeatureConfig());
         register(context, SMALL_RIVER_KEY, ModFeatures.SMALL_RIVER, new DefaultFeatureConfig());
 

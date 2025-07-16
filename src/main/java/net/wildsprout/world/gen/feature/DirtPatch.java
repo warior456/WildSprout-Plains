@@ -17,42 +17,35 @@ import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
 import net.wildsprout.tags.ModTags;
 
-public class WheatPatch extends Feature<DefaultFeatureConfig> {
+public class DirtPatch extends Feature<DefaultFeatureConfig> {
 
-    public WheatPatch(Codec<DefaultFeatureConfig> configCodec) {
+    public DirtPatch(Codec<DefaultFeatureConfig> configCodec) {
         super(configCodec);
     }
 
     public boolean generate(FeatureContext<DefaultFeatureConfig> context) {
-        Random random = context.getRandom();
         BlockPos blockPos = context.getOrigin();
         StructureWorldAccess structureWorldAccess = context.getWorld();
 
         int featureSize = 5;
 
-        ChunkRandom chunkRandom = new ChunkRandom(new CheckedRandom(structureWorldAccess.getSeed()));
-        DoublePerlinNoiseSampler wheatPatchesNoise = DoublePerlinNoiseSampler.create(chunkRandom, -4, new double[]{1});
-        DoublePerlinNoiseSampler mainNoise = DoublePerlinNoiseSampler.create(chunkRandom, -9, new double[]{1,1});
+        ChunkRandom chunkRandom = new ChunkRandom(new CheckedRandom(structureWorldAccess.getSeed()+1));
+        DoublePerlinNoiseSampler dirtPatchesNoise = DoublePerlinNoiseSampler.create(chunkRandom, -5, new double[]{1});
 
         int x = blockPos.getX();
-        int y = blockPos.getY();
+        int y = blockPos.getY() - 1;
         int z = blockPos.getZ();
 
         for (int i = -(featureSize/2);i< (featureSize+1)/2;i++){
             for (int k = -(featureSize/2);k< (featureSize+1)/2;k++){
                 int j = structureWorldAccess.getChunk(new BlockPos(x + i,y,z + k)).getHeightmap(Heightmap.Type.WORLD_SURFACE_WG).get((32+i+x%16)%16, (32+k+z%16)%16);
-                BlockPos pos = new BlockPos(x+i,j,z+k);
+                BlockPos pos = new BlockPos(x+i,j -1,z+k);
 
-                if (!(structureWorldAccess.getBlockState(pos.down()).equals(Blocks.GRASS_BLOCK.getDefaultState()))) continue;
-                if (!(structureWorldAccess.getBlockState(pos).isIn(ModTags.Blocks.CAN_BE_REPLACED_NON_SOLID))) continue;
+                if (!(structureWorldAccess.getBlockState(pos).isIn(ModTags.Blocks.CAN_BE_REPLACED))) continue;
 
-                double mainSample = mainNoise.sample(pos.getX(), pos.getY(), pos.getZ());
-                if (mainSample > 0.1 || mainSample < -0.1) continue;
-
-                double noiseSample = wheatPatchesNoise.sample(pos.getX(), pos.getY(), pos.getZ());
-                if (chunkRandom.nextDouble() < noiseSample - 0.22){
-                    this.setBlockState(structureWorldAccess, pos, Blocks.WHEAT.getDefaultState().with(CropBlock.AGE, random.nextBetween(6,7)));
-                    this.setBlockState(structureWorldAccess, pos.down(), Blocks.FARMLAND.getDefaultState());
+                double noiseSample = dirtPatchesNoise.sample(pos.getX(), pos.getY(), pos.getZ());
+                if (chunkRandom.nextDouble() < noiseSample*10 -5){
+                    this.setBlockState(structureWorldAccess, pos, Blocks.COARSE_DIRT.getDefaultState());
                 }
             }
         }
