@@ -15,25 +15,16 @@ import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.feature.util.FeatureContext;
 import net.wildsprout.tags.ModTags;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Boulders extends Feature<DefaultFeatureConfig> {
 
     public Boulders(Codec<DefaultFeatureConfig> configCodec) {
         super(configCodec);
     }
 
-    @Override
-    public boolean generate(FeatureContext<DefaultFeatureConfig> context) {
-        StructureWorldAccess structureWorldAccess = context.getWorld();
-        BlockPos center = context.getOrigin();
-        Random random = context.getRandom();
-
-        int j = structureWorldAccess.getChunk(new BlockPos(center.getX(),center.getY(),center.getZ())).getHeightmap(Heightmap.Type.WORLD_SURFACE_WG).get((32+center.getX()%16)%16, (32+center.getZ()%16)%16);
-
-        center = new BlockPos(center.getX(),j,center.getZ());
-
-        if (!(structureWorldAccess.getBlockState(center.down()).isIn(ModTags.Blocks.CAN_BE_REPLACED))) return false;
-
-
+    public void generateBoulder(StructureWorldAccess structureWorldAccess, Random random, BlockPos center, BlockState block ){
         ChunkRandom chunkRandom = new ChunkRandom(new CheckedRandom(structureWorldAccess.getSeed()));
         DoublePerlinNoiseSampler noise = DoublePerlinNoiseSampler.create(chunkRandom, -3, new double[]{1});
 
@@ -48,9 +39,33 @@ public class Boulders extends Feature<DefaultFeatureConfig> {
 
             // Carve a rough sphere
             if (distance <= radius * radius + noise.sample(pos.getX(), pos.getY(), pos.getZ())*radius*14) {
-                this.setBlockState(structureWorldAccess,pos,Blocks.STONE.getDefaultState());
+                this.setBlockState(structureWorldAccess,pos,block);
             }
         }
+    }
+
+    @Override
+    public boolean generate(FeatureContext<DefaultFeatureConfig> context) {
+        StructureWorldAccess structureWorldAccess = context.getWorld();
+        BlockPos center = context.getOrigin();
+        Random random = context.getRandom();
+
+        int j = structureWorldAccess.getChunk(new BlockPos(center.getX(),center.getY(),center.getZ())).getHeightmap(Heightmap.Type.WORLD_SURFACE_WG).get((32+center.getX()%16)%16, (32+center.getZ()%16)%16);
+
+        center = new BlockPos(center.getX(),j,center.getZ());
+
+        if (!(structureWorldAccess.getBlockState(center.down()).isIn(ModTags.Blocks.CAN_BE_REPLACED))) return false;
+
+        List<BlockState> possibleBlocks = new ArrayList<>();
+        possibleBlocks.add(Blocks.STONE.getDefaultState());
+        possibleBlocks.add(Blocks.ANDESITE.getDefaultState());
+        possibleBlocks.add(Blocks.GRANITE.getDefaultState());
+        possibleBlocks.add(Blocks.DIORITE.getDefaultState());
+        possibleBlocks.add(Blocks.TUFF.getDefaultState());
+
+        int r = random.nextInt(possibleBlocks.size());
+
+        generateBoulder(structureWorldAccess,random,center,possibleBlocks.get(r));
 
         return true;
     }

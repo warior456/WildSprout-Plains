@@ -1,9 +1,9 @@
 {
-  "feature": "wildsprout-plains:lake",
+  "feature": "wildsprout-plains:berry_patch",
   "placement": [
     {
       "type": "minecraft:rarity_filter",
-      "chance": 30
+      "chance": 50
     },
     {
       "type": "minecraft:in_square"

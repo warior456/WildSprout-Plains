@@ -24,6 +24,7 @@ public class ModPlacedFeatures {
     //public static final RegistryKey<PlacedFeature> SMALL_RIVER_PLACED_KEY = registerKey("small_river");
     public static final RegistryKey<PlacedFeature> PUMPKIN_PATCH_PLACED_KEY = registerKey("pumpkin_patch");
     public static final RegistryKey<PlacedFeature> RANDOM_PATH_PLACED_KEY = registerKey("random_path");
+    public static final RegistryKey<PlacedFeature> BERRY_PATCH_PLACED_KEY = registerKey("berry_patch");
 
 
     public static void bootstrap(Registerable<PlacedFeature> context) {
@@ -35,10 +36,11 @@ public class ModPlacedFeatures {
         register(context,DIRT_PATCH_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.DIRT_PATCH_KEY), CountPlacementModifier.of(20), SquarePlacementModifier.of(), PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP, BiomePlacementModifier.of());
         register(context,BUSHES_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.BUSHES_KEY), RarityFilterPlacementModifier.of(16), SquarePlacementModifier.of(), PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP, BiomePlacementModifier.of());
         register(context,SMALL_RIVER_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.SMALL_RIVER_KEY), RarityFilterPlacementModifier.of(256), SquarePlacementModifier.of(), PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP, BiomePlacementModifier.of());
-        register(context,LAKE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.LAKE_KEY), RarityFilterPlacementModifier.of(20), SquarePlacementModifier.of(), PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP, BiomePlacementModifier.of());
+        register(context,LAKE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.LAKE_KEY), RarityFilterPlacementModifier.of(30), SquarePlacementModifier.of(), PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP, BiomePlacementModifier.of());
         //register(context,SMALL_RIVER_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.SMALL_RIVER_KEY), RarityFilterPlacementModifier.of(256), SquarePlacementModifier.of(), PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP, BiomePlacementModifier.of());
         register(context,PUMPKIN_PATCH_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.PUMPKIN_PATCH_KEY), RarityFilterPlacementModifier.of(300), SquarePlacementModifier.of(), PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP, BiomePlacementModifier.of());
-        register(context,RANDOM_PATH_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.RANDOM_PATH_KEY), RarityFilterPlacementModifier.of(40), SquarePlacementModifier.of(), PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP, BiomePlacementModifier.of());
+        register(context,RANDOM_PATH_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.RANDOM_PATH_KEY), RarityFilterPlacementModifier.of(60), SquarePlacementModifier.of(), PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP, BiomePlacementModifier.of());
+        register(context,BERRY_PATCH_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.BERRY_PATCH_KEY), RarityFilterPlacementModifier.of(50), SquarePlacementModifier.of(), PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP, BiomePlacementModifier.of());
     }
 
     public static RegistryKey<PlacedFeature> registerKey(String name) {

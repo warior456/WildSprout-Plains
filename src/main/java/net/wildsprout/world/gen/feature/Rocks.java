@@ -15,10 +15,45 @@ import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
 import net.wildsprout.tags.ModTags;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Rocks extends Feature<DefaultFeatureConfig> {
 
     public Rocks(Codec<DefaultFeatureConfig> configCodec) {
         super(configCodec);
+    }
+
+    public void generateRock(StructureWorldAccess structureWorldAccess, Random random, BlockPos center, BlockState block, BlockState slab){
+        ChunkRandom chunkRandom = new ChunkRandom(new CheckedRandom(structureWorldAccess.getSeed()));
+        DoublePerlinNoiseSampler noise = DoublePerlinNoiseSampler.create(chunkRandom, -2, new double[]{1});
+
+        double radius = 0.5 + random.nextDouble();
+
+
+
+        // Iterate a cube around the center
+        for (BlockPos pos : BlockPos.iterate(center.add(-(int)Math.round(radius*2), -(int)Math.round(radius*2), -(int)Math.round(radius*2)), center.add((int)Math.round(radius*2), (int)Math.round(radius*2), (int)Math.round(radius*2)))) {
+            double distance = center.getSquaredDistance(pos);
+
+            // Carve a rough sphere
+            if (distance <= radius * radius + noise.sample(pos.getX(), pos.getY(), pos.getZ())) {
+                if (!structureWorldAccess.getBlockState(pos).isIn(ModTags.Blocks.CAN_BE_REPLACED)) continue;
+                structureWorldAccess.setBlockState(pos, block,2);
+            }
+        }
+
+        for (BlockPos pos : BlockPos.iterate(center.add(-(int)Math.round(radius*2), -(int)Math.round(radius*2), -(int)Math.round(radius*2)), center.add((int)Math.round(radius*2), (int)Math.round(radius*2), (int)Math.round(radius*2)))) {
+            double distance = center.getSquaredDistance(pos);
+
+            if (distance <= radius * radius + noise.sample(pos.getX(), pos.getY(), pos.getZ())+0.7) {
+                if (structureWorldAccess.getBlockState(pos).isIn(ModTags.Blocks.CAN_BE_REPLACED_NON_SOLID) &&
+                        !(structureWorldAccess.getBlockState(pos.down()).isIn(ModTags.Blocks.CAN_BE_REPLACED_NON_SOLID)) && //todo: check for slab under
+                        structureWorldAccess.getBlockState(pos.up()).isIn(ModTags.Blocks.CAN_BE_REPLACED_NON_SOLID)){
+                    structureWorldAccess.setBlockState(pos, slab,2);
+                }
+            }
+        }
     }
 
     @Override
@@ -35,38 +70,23 @@ public class Rocks extends Feature<DefaultFeatureConfig> {
 
         center = center.down();
 
+        List<BlockState> possibleBlocks = new ArrayList<>();
+        possibleBlocks.add(Blocks.STONE.getDefaultState());
+        possibleBlocks.add(Blocks.ANDESITE.getDefaultState());
+        possibleBlocks.add(Blocks.GRANITE.getDefaultState());
+        possibleBlocks.add(Blocks.DIORITE.getDefaultState());
+        possibleBlocks.add(Blocks.TUFF.getDefaultState());
 
-        ChunkRandom chunkRandom = new ChunkRandom(new CheckedRandom(structureWorldAccess.getSeed()));
-        DoublePerlinNoiseSampler noise = DoublePerlinNoiseSampler.create(chunkRandom, -2, new double[]{1});
+        List<BlockState> possibleSlabs = new ArrayList<>();
+        possibleSlabs.add(Blocks.STONE_SLAB.getDefaultState());
+        possibleSlabs.add(Blocks.ANDESITE_SLAB.getDefaultState());
+        possibleSlabs.add(Blocks.GRANITE_SLAB.getDefaultState());
+        possibleSlabs.add(Blocks.DIORITE_SLAB.getDefaultState());
+        possibleSlabs.add(Blocks.TUFF_SLAB.getDefaultState());
 
-        double radius = 0.5 + random.nextDouble();
+        int r = random.nextInt(possibleBlocks.size());
 
-
-
-        // Iterate a cube around the center
-        for (BlockPos pos : BlockPos.iterate(center.add(-(int)Math.round(radius*2), -(int)Math.round(radius*2), -(int)Math.round(radius*2)), center.add((int)Math.round(radius*2), (int)Math.round(radius*2), (int)Math.round(radius*2)))) {
-            double distance = center.getSquaredDistance(pos);
-
-            // Carve a rough sphere
-            if (distance <= radius * radius + noise.sample(pos.getX(), pos.getY(), pos.getZ())) {
-                if (!structureWorldAccess.getBlockState(pos).isIn(ModTags.Blocks.CAN_BE_REPLACED)) continue;
-                BlockState block = Blocks.STONE.getDefaultState();
-                structureWorldAccess.setBlockState(pos, block,2);
-            }
-        }
-
-        for (BlockPos pos : BlockPos.iterate(center.add(-(int)Math.round(radius*2), -(int)Math.round(radius*2), -(int)Math.round(radius*2)), center.add((int)Math.round(radius*2), (int)Math.round(radius*2), (int)Math.round(radius*2)))) {
-            double distance = center.getSquaredDistance(pos);
-
-            if (distance <= radius * radius + noise.sample(pos.getX(), pos.getY(), pos.getZ())+0.7) {
-                if (structureWorldAccess.getBlockState(pos).isIn(ModTags.Blocks.CAN_BE_REPLACED_NON_SOLID) &&
-                        !(structureWorldAccess.getBlockState(pos.down()).isIn(ModTags.Blocks.CAN_BE_REPLACED_NON_SOLID)) &&
-                        structureWorldAccess.getBlockState(pos.up()).isIn(ModTags.Blocks.CAN_BE_REPLACED_NON_SOLID)){
-                    BlockState block = Blocks.STONE_SLAB.getDefaultState();
-                    structureWorldAccess.setBlockState(pos, block,2);
-                }
-            }
-        }
+        generateRock(structureWorldAccess,random,center,possibleBlocks.get(r), possibleSlabs.get(r));
 
         return true;
     }
