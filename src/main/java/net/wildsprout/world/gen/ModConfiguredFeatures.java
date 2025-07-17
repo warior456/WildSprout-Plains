@@ -9,8 +9,11 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.structure.rule.BlockMatchRuleTest;
 import net.minecraft.structure.rule.RuleTest;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
+import net.minecraft.world.gen.blockpredicate.BlockPredicate;
 import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.placementmodifier.BlockFilterPlacementModifier;
 import net.minecraft.world.gen.stateprovider.BlockStateProvider;
 import net.wildsprout.WildSproutPlains;
 
@@ -21,10 +24,13 @@ public class ModConfiguredFeatures {
     public static final RegistryKey<ConfiguredFeature<?,?>> BOULDERS_KEY = registerKey("boulders");
     public static final RegistryKey<ConfiguredFeature<?,?>> ROCKS_KEY = registerKey("rocks");
     public static final RegistryKey<ConfiguredFeature<?,?>> WHEAT_PATCH_KEY = registerKey("wheat_patch");
+
     public static final RegistryKey<ConfiguredFeature<?,?>> DIRT_PATCH_KEY = registerKey("dirt_patch");
     public static final RegistryKey<ConfiguredFeature<?,?>> BUSHES_KEY = registerKey("bushes");
     public static final RegistryKey<ConfiguredFeature<?,?>> SMALL_RIVER_KEY = registerKey("small_river");
     public static final RegistryKey<ConfiguredFeature<?,?>> LAKE_KEY = registerKey("lake");
+    //public static final RegistryKey<ConfiguredFeature<?,?>> SMALL_RIVER_KEY = registerKey("small_river");
+    public static final RegistryKey<ConfiguredFeature<?,?>> PUMPKIN_PATCH_KEY = registerKey("pumpkin_patch");
 
     public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
 
@@ -34,6 +40,28 @@ public class ModConfiguredFeatures {
         register(context,WHEAT_PATCH_KEY, ModFeatures.WHEAT_PATCH, new DefaultFeatureConfig());
         register(context,DIRT_PATCH_KEY, ModFeatures.DIRT_PATCH, new DefaultFeatureConfig());
         register(context, BUSHES_KEY, ModFeatures.BUSHES, new DefaultFeatureConfig());
+        //register(context, SMALL_RIVER_KEY, ModFeatures.SMALL_RIVER, new DefaultFeatureConfig());
+        register(context, PUMPKIN_PATCH_KEY, Feature.RANDOM_PATCH,
+                new RandomPatchFeatureConfig(
+                        96, // "tries": 96
+                        7,  // "xz_spread": 7
+                        3,  // "y_spread": 3
+                        // This is the "feature" object from your JSON
+                        PlacedFeatures.createEntry(
+                                Feature.SIMPLE_BLOCK,
+                                new SimpleBlockFeatureConfig(BlockStateProvider.of(Blocks.PUMPKIN)),
+                                BlockFilterPlacementModifier.of(
+                                        // The predicate is "all_of"
+                                        BlockPredicate.allOf(
+                                                // Predicate 1: current block is air
+                                                BlockPredicate.matchingBlocks(Blocks.AIR),
+                                                // Predicate 2: block below is grass
+                                                BlockPredicate.matchingBlocks(new BlockPos(0, -1, 0), Blocks.GRASS_BLOCK)
+                                        )
+                                )
+                        )
+                )
+        );
         register(context, SMALL_RIVER_KEY, ModFeatures.SMALL_RIVER, new DefaultFeatureConfig());
         register(context, LAKE_KEY, ModFeatures.LAKE, new DefaultFeatureConfig());
 
