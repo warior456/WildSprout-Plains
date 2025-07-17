@@ -19,6 +19,7 @@ public class ModFeatures {
     public static final Feature<DefaultFeatureConfig> LAKE = new Lake(DefaultFeatureConfig.CODEC);
     //public static final Feature<DefaultFeatureConfig> SMALL_RIVER = new SmallRiver(DefaultFeatureConfig.CODEC);
     public static final Feature<RandomPatchFeatureConfig> PUMPKIN_PATCH = new PumpkinPatch(RandomPatchFeatureConfig.CODEC);
+    public static final Feature<DefaultFeatureConfig> RANDOM_PATH = new RandomPath(DefaultFeatureConfig.CODEC);
 
     public static void init(){
 
@@ -31,5 +32,6 @@ public class ModFeatures {
         Registry.register(Registries.FEATURE, WildSproutPlains.identifier( "lake"), LAKE);
         //Registry.register(Registries.FEATURE, WildSproutPlains.identifier( "small_river"), SMALL_RIVER);
         Registry.register(Registries.FEATURE, WildSproutPlains.identifier( "pumpkin_patch"), PUMPKIN_PATCH);
+        Registry.register(Registries.FEATURE, WildSproutPlains.identifier( "random_path"), RANDOM_PATH);
     }
 }

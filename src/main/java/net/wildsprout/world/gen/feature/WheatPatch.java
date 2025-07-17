@@ -43,7 +43,7 @@ public class WheatPatch extends Feature<DefaultFeatureConfig> {
                 int j = structureWorldAccess.getChunk(new BlockPos(x + i,y,z + k)).getHeightmap(Heightmap.Type.WORLD_SURFACE_WG).get((32+i+x%16)%16, (32+k+z%16)%16);
                 BlockPos pos = new BlockPos(x+i,j,z+k);
 
-                if (!(structureWorldAccess.getBlockState(pos.down()).equals(Blocks.GRASS_BLOCK.getDefaultState()))) continue;
+                if (!(structureWorldAccess.getBlockState(pos.down()).isIn(ModTags.Blocks.CAN_BE_REPLACED))) continue;
                 if (!(structureWorldAccess.getBlockState(pos).isIn(ModTags.Blocks.CAN_BE_REPLACED_NON_SOLID))) continue;
 
                 double mainSample = mainNoise.sample(pos.getX(), pos.getY(), pos.getZ());

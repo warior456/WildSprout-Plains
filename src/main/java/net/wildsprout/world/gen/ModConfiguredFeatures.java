@@ -31,6 +31,7 @@ public class ModConfiguredFeatures {
     public static final RegistryKey<ConfiguredFeature<?,?>> LAKE_KEY = registerKey("lake");
     //public static final RegistryKey<ConfiguredFeature<?,?>> SMALL_RIVER_KEY = registerKey("small_river");
     public static final RegistryKey<ConfiguredFeature<?,?>> PUMPKIN_PATCH_KEY = registerKey("pumpkin_patch");
+    public static final RegistryKey<ConfiguredFeature<?,?>> RANDOM_PATH_KEY = registerKey("random_path");
 
     public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
 
@@ -64,6 +65,7 @@ public class ModConfiguredFeatures {
         );
         register(context, SMALL_RIVER_KEY, ModFeatures.SMALL_RIVER, new DefaultFeatureConfig());
         register(context, LAKE_KEY, ModFeatures.LAKE, new DefaultFeatureConfig());
+        register(context, RANDOM_PATH_KEY, ModFeatures.RANDOM_PATH, new DefaultFeatureConfig());
 
     }
 
