@@ -18,7 +18,23 @@ public class ModWorldGeneration {
         BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS), GenerationStep.Feature.UNDERGROUND_ORES, ModPlacedFeatures.DIRT_PATCH_PLACED_KEY);
         //BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS), GenerationStep.Feature.TOP_LAYER_MODIFICATION, ModPlacedFeatures.SMALL_RIVER_PLACED_KEY);
 
-
+        //MODIFY FEATURES
+        BiomeModifications.create(WildSproutPlains.identifier("pumpkin_patch"))
+                .add(ModificationPhase.REPLACEMENTS,
+                        BiomeSelectors.includeByKey(BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS),
+                        context -> {
+                            // Identify the original feature to replace.
+                            context.getGenerationSettings().removeFeature(
+                                    GenerationStep.Feature.VEGETAL_DECORATION,
+                                    VegetationPlacedFeatures.PATCH_PUMPKIN
+                            );
+                            // Add new custom pumpkin patch feature.
+                            context.getGenerationSettings().addFeature(
+                                    GenerationStep.Feature.VEGETAL_DECORATION,
+                                    ModPlacedFeatures.PUMPKIN_PATCH_PLACED_KEY
+                            );
+                        }
+                );
 
         // REMOVE FEATURES
         BiomeModifications.create(WildSproutPlains.identifier("no_lava_spring")).add( ModificationPhase.REMOVALS,BiomeSelectors.includeByKey(BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS),
