@@ -41,7 +41,7 @@ public class ModConfiguredFeatures {
         register(context,DIRT_PATCH_KEY, ModFeatures.DIRT_PATCH, new DefaultFeatureConfig());
         register(context, BUSHES_KEY, ModFeatures.BUSHES, new DefaultFeatureConfig());
         //register(context, SMALL_RIVER_KEY, ModFeatures.SMALL_RIVER, new DefaultFeatureConfig());
-        register(context, PUMPKIN_PATCH_KEY, Feature.RANDOM_PATCH,
+        register(context, PUMPKIN_PATCH_KEY, ModFeatures.PUMPKIN_PATCH,
                 new RandomPatchFeatureConfig(
                         96, // "tries": 96
                         7,  // "xz_spread": 7

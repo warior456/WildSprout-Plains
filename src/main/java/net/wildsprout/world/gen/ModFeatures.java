@@ -30,6 +30,6 @@ public class ModFeatures {
         Registry.register(Registries.FEATURE, WildSproutPlains.identifier( "small_river"), SMALL_RIVER);
         Registry.register(Registries.FEATURE, WildSproutPlains.identifier( "lake"), LAKE);
         //Registry.register(Registries.FEATURE, WildSproutPlains.identifier( "small_river"), SMALL_RIVER);
-        Registry.register(Registries.FEATURE, WildSproutPlains.identifier( "small_river"), PUMPKIN_PATCH);
+        Registry.register(Registries.FEATURE, WildSproutPlains.identifier( "pumpkin_patch"), PUMPKIN_PATCH);
     }
 }
