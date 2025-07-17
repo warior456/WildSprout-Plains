@@ -1,9 +1,8 @@
 package net.wildsprout.world.gen.feature;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.LeavesBlock;
+import net.minecraft.block.*;
+import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.StructureWorldAccess;
@@ -25,6 +24,8 @@ public class PumpkinPatch extends Feature<RandomPatchFeatureConfig> {
         int i = 0;
         BlockPos.Mutable mutablePos1 = new BlockPos.Mutable();
         BlockPos.Mutable mutablePos2 = new BlockPos.Mutable();
+        BlockPos.Mutable mutablePos3 = new BlockPos.Mutable();
+        BlockPos.Mutable mutablePos4 = new BlockPos.Mutable();
         int j = randomPatchFeatureConfig.xzSpread() + 1;
         int k = randomPatchFeatureConfig.ySpread() + 1;
 
@@ -33,8 +34,31 @@ public class PumpkinPatch extends Feature<RandomPatchFeatureConfig> {
             if (randomPatchFeatureConfig.feature().value().generateUnregistered(structureWorldAccess, context.getGenerator(), random, mutablePos1)) {
                 i++;
             }
-            mutablePos2.set(blockPos, random.nextInt(j+2) - random.nextInt(j+2), random.nextInt(k+1) - random.nextInt(k+1), random.nextInt(j+2) - random.nextInt(j+2));
-            structureWorldAccess.setBlockState(mutablePos1, Blocks.OAK_LEAVES.getDefaultState().with(LeavesBlock.PERSISTENT, true), 2);
+            //leaves
+            for (int m = 0; m < 4; m++) {
+                mutablePos2.set(blockPos, random.nextInt(j+2) - random.nextInt(j+2), random.nextInt(k+1) - random.nextInt(k+1), random.nextInt(j+2) - random.nextInt(j+2));
+                if((structureWorldAccess.getBlockState(mutablePos2).getBlock() == Blocks.AIR) && (structureWorldAccess.getBlockState(mutablePos2.down()).getBlock() == Blocks.GRASS_BLOCK) ) {
+                    structureWorldAccess.setBlockState(mutablePos2, Blocks.OAK_LEAVES.getDefaultState().with(LeavesBlock.PERSISTENT, true), 2);
+                }
+            }
+
+            for (int m = 0; m < 2; m++) {
+                //ferns
+                mutablePos3.set(blockPos, random.nextInt(j+2) - random.nextInt(j+2), random.nextInt(k+1) - random.nextInt(k+1), random.nextInt(j+2) - random.nextInt(j+2));
+                if((structureWorldAccess.getBlockState(mutablePos3).getBlock() == Blocks.AIR) && (structureWorldAccess.getBlockState(mutablePos3.down()).getBlock() == Blocks.GRASS_BLOCK) ) {
+                    structureWorldAccess.setBlockState(mutablePos3, Blocks.FERN.getDefaultState(), 2);
+                }
+
+                //big ferns
+                mutablePos4.set(blockPos, random.nextInt(j+2) - random.nextInt(j+2), random.nextInt(k+1) - random.nextInt(k+1), random.nextInt(j+2) - random.nextInt(j+2));
+                if((structureWorldAccess.getBlockState(mutablePos4).getBlock() == Blocks.AIR) && (structureWorldAccess.getBlockState(mutablePos4.up()).getBlock() == Blocks.AIR) && (structureWorldAccess.getBlockState(mutablePos4.down()).getBlock() == Blocks.GRASS_BLOCK) ) {
+                    structureWorldAccess.setBlockState(mutablePos4,Blocks.LARGE_FERN.getDefaultState().with(TallPlantBlock.HALF, DoubleBlockHalf.LOWER),2);
+                    structureWorldAccess.setBlockState(mutablePos4.up(),Blocks.LARGE_FERN.getDefaultState().with(TallPlantBlock.HALF, DoubleBlockHalf.UPPER),2);
+                }
+            }
+
+
+
         }
 
         return i > 0;

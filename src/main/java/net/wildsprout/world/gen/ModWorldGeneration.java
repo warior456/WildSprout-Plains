@@ -40,7 +40,7 @@ public class ModWorldGeneration {
         //BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS), GenerationStep.Feature.TOP_LAYER_MODIFICATION, ModPlacedFeatures.SMALL_RIVER_PLACED_KEY);
 
         //MODIFY FEATURES
-        /*BiomeModifications.create(WildSproutPlains.identifier("pumpkin_patch"))
+        BiomeModifications.create(WildSproutPlains.identifier("pumpkin_patch"))
                 .add(ModificationPhase.REPLACEMENTS,
                         BiomeSelectors.includeByKey(BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS),
                         context -> {
@@ -55,7 +55,7 @@ public class ModWorldGeneration {
                                     ModPlacedFeatures.PUMPKIN_PATCH_PLACED_KEY
                             );
                         }
-                );*/
+                );
 
         // REMOVE FEATURES
         BiomeModifications.create(WildSproutPlains.identifier("no_lava_spring")).add( ModificationPhase.REMOVALS,BiomeSelectors.includeByKey(BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS),
