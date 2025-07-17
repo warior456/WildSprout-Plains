@@ -21,10 +21,10 @@ public class ModConfiguredFeatures {
     public static final RegistryKey<ConfiguredFeature<?,?>> BOULDERS_KEY = registerKey("boulders");
     public static final RegistryKey<ConfiguredFeature<?,?>> ROCKS_KEY = registerKey("rocks");
     public static final RegistryKey<ConfiguredFeature<?,?>> WHEAT_PATCH_KEY = registerKey("wheat_patch");
-
     public static final RegistryKey<ConfiguredFeature<?,?>> DIRT_PATCH_KEY = registerKey("dirt_patch");
     public static final RegistryKey<ConfiguredFeature<?,?>> BUSHES_KEY = registerKey("bushes");
     public static final RegistryKey<ConfiguredFeature<?,?>> SMALL_RIVER_KEY = registerKey("small_river");
+    public static final RegistryKey<ConfiguredFeature<?,?>> LAKE_KEY = registerKey("lake");
 
     public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
 
@@ -35,6 +35,7 @@ public class ModConfiguredFeatures {
         register(context,DIRT_PATCH_KEY, ModFeatures.DIRT_PATCH, new DefaultFeatureConfig());
         register(context, BUSHES_KEY, ModFeatures.BUSHES, new DefaultFeatureConfig());
         register(context, SMALL_RIVER_KEY, ModFeatures.SMALL_RIVER, new DefaultFeatureConfig());
+        register(context, LAKE_KEY, ModFeatures.LAKE, new DefaultFeatureConfig());
 
     }
 

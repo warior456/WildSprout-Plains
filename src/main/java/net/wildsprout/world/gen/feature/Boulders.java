@@ -47,11 +47,11 @@ public class Boulders extends Feature<DefaultFeatureConfig> {
 
             // Carve a rough sphere
             if (distance <= radius * radius + noise.sample(pos.getX(), pos.getY(), pos.getZ())*radius*14) {
-                BlockState block = Blocks.STONE.getDefaultState();
-                structureWorldAccess.setBlockState(pos, block,2);
+                this.setBlockState(structureWorldAccess,pos,Blocks.STONE.getDefaultState());
             }
         }
 
         return true;
     }
 }
+

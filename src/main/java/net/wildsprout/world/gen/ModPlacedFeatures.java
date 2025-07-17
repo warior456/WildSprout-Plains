@@ -20,6 +20,7 @@ public class ModPlacedFeatures {
     public static final RegistryKey<PlacedFeature> DIRT_PATCH_PLACED_KEY = registerKey("dirt_patch");
     public static final RegistryKey<PlacedFeature> BUSHES_PLACED_KEY = registerKey("bushes");
     public static final RegistryKey<PlacedFeature> SMALL_RIVER_PLACED_KEY = registerKey("small_river");
+    public static final RegistryKey<PlacedFeature> LAKE_PLACED_KEY = registerKey("lake");
 
 
     public static void bootstrap(Registerable<PlacedFeature> context) {
@@ -31,6 +32,7 @@ public class ModPlacedFeatures {
         register(context,DIRT_PATCH_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.DIRT_PATCH_KEY), CountPlacementModifier.of(20), SquarePlacementModifier.of(), PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP, BiomePlacementModifier.of());
         register(context,BUSHES_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.BUSHES_KEY), RarityFilterPlacementModifier.of(16), SquarePlacementModifier.of(), PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP, BiomePlacementModifier.of());
         register(context,SMALL_RIVER_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.SMALL_RIVER_KEY), RarityFilterPlacementModifier.of(256), SquarePlacementModifier.of(), PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP, BiomePlacementModifier.of());
+        register(context,LAKE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.LAKE_KEY), RarityFilterPlacementModifier.of(20), SquarePlacementModifier.of(), PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP, BiomePlacementModifier.of());
     }
 
     public static RegistryKey<PlacedFeature> registerKey(String name) {

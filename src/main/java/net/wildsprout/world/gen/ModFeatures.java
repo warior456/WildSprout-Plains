@@ -14,6 +14,7 @@ public class ModFeatures {
     public static final Feature<DefaultFeatureConfig> DIRT_PATCH = new DirtPatch(DefaultFeatureConfig.CODEC);
     public static final Feature<DefaultFeatureConfig> BUSHES = new Bushes(DefaultFeatureConfig.CODEC);
     public static final Feature<DefaultFeatureConfig> SMALL_RIVER = new SmallRiver(DefaultFeatureConfig.CODEC);
+    public static final Feature<DefaultFeatureConfig> LAKE = new Lake(DefaultFeatureConfig.CODEC);
 
     public static void init(){
 
@@ -23,5 +24,6 @@ public class ModFeatures {
         Registry.register(Registries.FEATURE, WildSproutPlains.identifier( "dirt_patch"), DIRT_PATCH);
         Registry.register(Registries.FEATURE, WildSproutPlains.identifier( "bushes"), BUSHES);
         Registry.register(Registries.FEATURE, WildSproutPlains.identifier( "small_river"), SMALL_RIVER);
+        Registry.register(Registries.FEATURE, WildSproutPlains.identifier( "lake"), LAKE);
     }
 }
