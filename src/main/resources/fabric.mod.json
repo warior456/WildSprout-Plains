@@ -3,15 +3,16 @@
 	"id": "wildsprout-plains",
 	"version": "${version}",
 	"name": "WildSprout: Plains",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "Improves the vanilla plains biome",
 	"authors": [
-		"Me!"
+		"Matteo_fey (warior456)",
+		"gems_bond"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"issues": "https://github.com/warior456/WildSprout-Plains/issues",
+		"sources": "https://github.com/warior456/WildSprout-Plains"
 	},
-	"license": "CC0-1.0",
+	"license": "WildSprout-Plains v1",
 	"icon": "assets/wildsprout-plains/icon.png",
 	"environment": "*",
 	"entrypoints": {
