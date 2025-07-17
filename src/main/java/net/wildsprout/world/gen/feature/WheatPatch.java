@@ -50,7 +50,7 @@ public class WheatPatch extends Feature<DefaultFeatureConfig> {
                 if (mainSample > 0.1 || mainSample < -0.1) continue;
 
                 double noiseSample = wheatPatchesNoise.sample(pos.getX(), pos.getY(), pos.getZ());
-                if (chunkRandom.nextDouble() < noiseSample - 0.22){
+                if (random.nextDouble() < noiseSample - 0.22){
                     this.setBlockState(structureWorldAccess, pos, Blocks.WHEAT.getDefaultState().with(CropBlock.AGE, random.nextBetween(6,7)));
                     this.setBlockState(structureWorldAccess, pos.down(), Blocks.FARMLAND.getDefaultState());
                 }
