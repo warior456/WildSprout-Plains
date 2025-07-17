@@ -34,15 +34,19 @@ public class PumpkinPatch extends Feature<RandomPatchFeatureConfig> {
             if (randomPatchFeatureConfig.feature().value().generateUnregistered(structureWorldAccess, context.getGenerator(), random, mutablePos1)) {
                 i++;
             }
+        }
+        for (int l = 0; l < randomPatchFeatureConfig.tries(); l++) {
             //leaves
             for (int m = 0; m < 4; m++) {
                 mutablePos2.set(blockPos, random.nextInt(j+2) - random.nextInt(j+2), random.nextInt(k+1) - random.nextInt(k+1), random.nextInt(j+2) - random.nextInt(j+2));
-                if((structureWorldAccess.getBlockState(mutablePos2).getBlock() == Blocks.AIR) && (structureWorldAccess.getBlockState(mutablePos2.down()).getBlock() == Blocks.GRASS_BLOCK) ) {
+                if((structureWorldAccess.getBlockState(mutablePos2).getBlock() == Blocks.AIR) && (structureWorldAccess.getBlockState(mutablePos2.down()).getBlock() == Blocks.GRASS_BLOCK ||
+                                                                                                    structureWorldAccess.getBlockState(mutablePos2.down()).getBlock() == Blocks.PUMPKIN) ) {
                     structureWorldAccess.setBlockState(mutablePos2, Blocks.OAK_LEAVES.getDefaultState().with(LeavesBlock.PERSISTENT, true), 2);
                 }
             }
-
-            for (int m = 0; m < 2; m++) {
+        }
+        for (int l = 0; l < randomPatchFeatureConfig.tries(); l++) {
+            for (int m = 0; m < 3; m++) {
                 //ferns
                 mutablePos3.set(blockPos, random.nextInt(j+2) - random.nextInt(j+2), random.nextInt(k+1) - random.nextInt(k+1), random.nextInt(j+2) - random.nextInt(j+2));
                 if((structureWorldAccess.getBlockState(mutablePos3).getBlock() == Blocks.AIR) && (structureWorldAccess.getBlockState(mutablePos3.down()).getBlock() == Blocks.GRASS_BLOCK) ) {

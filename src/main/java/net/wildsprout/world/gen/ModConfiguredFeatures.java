@@ -31,7 +31,6 @@ public class ModConfiguredFeatures {
     //public static final RegistryKey<ConfiguredFeature<?,?>> SMALL_RIVER_KEY = registerKey("small_river");
     public static final RegistryKey<ConfiguredFeature<?,?>> PUMPKIN_PATCH_KEY = registerKey("pumpkin_patch");
     public static final RegistryKey<ConfiguredFeature<?,?>> RANDOM_PATH_KEY = registerKey("random_path");
-    public static final RegistryKey<ConfiguredFeature<?,?>> BERRY_PATCH_KEY = registerKey("berry_patch");
 
     public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
 
@@ -66,9 +65,6 @@ public class ModConfiguredFeatures {
         register(context, SMALL_RIVER_KEY, ModFeatures.SMALL_RIVER, new DefaultFeatureConfig());
         register(context, LAKE_KEY, ModFeatures.LAKE, new DefaultFeatureConfig());
         register(context, RANDOM_PATH_KEY, ModFeatures.RANDOM_PATH, new DefaultFeatureConfig());
-        register(context, BERRY_PATCH_KEY, Feature.RANDOM_PATCH, new RandomPatchFeatureConfig(128, 20, 4, PlacedFeatures.createEntry(Feature.SIMPLE_BLOCK,
-                new SimpleBlockFeatureConfig(BlockStateProvider.of(Blocks.SWEET_BERRY_BUSH.getDefaultState().with(SweetBerryBushBlock.AGE,3))),
-                BlockPredicate.allOf(new BlockPredicate[]{BlockPredicate.matchingBlocks(Direction.DOWN.getVector(), new Block[]{Blocks.GRASS_BLOCK})}))));
 
     }
     public static RegistryKey<ConfiguredFeature<?, ?>> registerKey(String name) {
