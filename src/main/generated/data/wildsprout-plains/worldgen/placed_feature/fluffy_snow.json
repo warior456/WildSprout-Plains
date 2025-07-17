@@ -1,9 +1,9 @@
 {
-  "feature": "wildsprout-plains:pumpkin_patch",
+  "feature": "wildsprout-plains:fluffy_snow",
   "placement": [
     {
-      "type": "minecraft:rarity_filter",
-      "chance": 300
+      "type": "minecraft:count",
+      "count": 20
     },
     {
       "type": "minecraft:in_square"
