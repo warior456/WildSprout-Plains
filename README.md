@@ -4,12 +4,13 @@ A mod that improves the vanilla plains biome
 this mod is unreleased
 
 ## FEATURES
+- small ponds
+- wheat patches
 - bushes that generate throughout the plains
 - small stones
 - boulders
-- wheat fields
 - coarse dirt patches
-- small ponds
+- upgraded pumpkin patches
 
 
 ## Screenshots
@@ -18,9 +19,9 @@ A side by side view
 <details>
   <summary>Click to view screenshots</summary>
 
-
-  ![Pond](https://github.com/user-attachments/assets/b670710b-3b7a-4185-8ee3-71a1200ae406)
   A small pond
+  ![Pond](https://github.com/user-attachments/assets/b670710b-3b7a-4185-8ee3-71a1200ae406)
+
   
 </details>
 
