@@ -56,35 +56,34 @@ public class FluffySnow extends Feature<DefaultFeatureConfig> {
 
         for (int i = -(featureSize/2);i< (featureSize+1)/2;i++){
             for (int k = -(featureSize/2);k< (featureSize+1)/2;k++){
-                int j = structureWorldAccess.getChunk(new BlockPos(x + i,y,z + k)).getHeightmap(Heightmap.Type.WORLD_SURFACE_WG).get((32+i+x%16)%16, (32+k+z%16)%16);
-                BlockPos pos = new BlockPos(x+i,j,z+k);
-
-                if (!(structureWorldAccess.getBlockState(pos).equals(Blocks.SNOW.getDefaultState()) ||structureWorldAccess.getBlockState(pos).equals(Blocks.AIR.getDefaultState()))) continue;
-                if (!canPlaceAt(structureWorldAccess,pos)) continue;
-
-                int snowlayers = (int)Math.round(Math.clamp(snowNoise.sample(pos.getX(), pos.getY(), pos.getZ())+0.5,0,2)*3) + random.nextInt(2)+1;
-
-                this.setBlockState(structureWorldAccess, pos, Blocks.SNOW.getDefaultState().with(LAYERS, snowlayers));
-
-            }
-        }
-
-        for (int i = -(featureSize/2);i< (featureSize+1)/2;i++){
-            for (int k = -(featureSize/2);k< (featureSize+1)/2;k++){
                 int j = structureWorldAccess.getChunk(new BlockPos(x + i,y,z + k)).getHeightmap(Heightmap.Type.MOTION_BLOCKING).get((32+i+x%16)%16, (32+k+z%16)%16);
                 BlockPos pos = new BlockPos(x+i,j,z+k);
 
-                if (!(structureWorldAccess.getBlockState(pos).equals(Blocks.SNOW.getDefaultState()) || structureWorldAccess.getBlockState(pos).equals(Blocks.AIR.getDefaultState()))) continue;
-                if (!canPlaceAt(structureWorldAccess,pos)) continue;
+                if ((structureWorldAccess.getBlockState(pos).equals(Blocks.SNOW.getDefaultState()) || structureWorldAccess.getBlockState(pos).equals(Blocks.AIR.getDefaultState()))){
+                    if (canPlaceAt(structureWorldAccess,pos)){
 
-                int snowlayers = (int)Math.round(Math.clamp(snowNoise.sample(pos.getX(), pos.getY(), pos.getZ())+0.5,0,2)*3) + random.nextInt(2)+1;
+                        int snowlayers = (int)Math.round(Math.clamp(snowNoise.sample(pos.getX(), pos.getY(), pos.getZ())+0.5,0,2)*3) + random.nextInt(2)+1;
+                        this.setBlockState(structureWorldAccess, pos, Blocks.SNOW.getDefaultState().with(LAYERS, snowlayers));
+                    }
+                }
 
-                this.setBlockState(structureWorldAccess, pos, Blocks.SNOW.getDefaultState().with(LAYERS, snowlayers));
+                if (structureWorldAccess.getBlockState(pos.down()).isIn(BlockTags.LEAVES)){
+                    j = structureWorldAccess.getChunk(new BlockPos(x + i,y,z + k)).getHeightmap(Heightmap.Type.WORLD_SURFACE_WG).get((32+i+x%16)%16, (32+k+z%16)%16);
+                    pos = new BlockPos(x+i,j,z+k);
+
+                    if ((structureWorldAccess.getBlockState(pos).equals(Blocks.SNOW.getDefaultState()) || structureWorldAccess.getBlockState(pos).equals(Blocks.AIR.getDefaultState()))){
+                        if (canPlaceAt(structureWorldAccess,pos)){
+
+                        int snowlayers = (int)Math.round(Math.clamp(snowNoise.sample(pos.getX(), pos.getY(), pos.getZ())+0.5,0,2)*3) + random.nextInt(2)+1;
+
+                        this.setBlockState(structureWorldAccess, pos, Blocks.SNOW.getDefaultState().with(LAYERS, snowlayers));
+                        }
+                    }
+
+                }
 
             }
         }
-
-
 
         return true;
 
