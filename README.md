@@ -1,8 +1,5 @@
 # WildSprout: Plains
 A mod that improves the vanilla plains biome
-# IMPORTANT NOTES
-this mod is unreleased
-
 
 ## FEATURES
 - small ponds
