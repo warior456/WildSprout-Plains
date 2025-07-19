@@ -12,19 +12,6 @@ this mod is unreleased
 - coarse dirt patches
 - upgraded pumpkin patches
 
-
-## Screenshots
-A side by side view
-
-<details>
-  <summary>Click to view screenshots</summary>
-
-  A small pond
-  ![Pond](https://github.com/user-attachments/assets/b670710b-3b7a-4185-8ee3-71a1200ae406)
-
-  
-</details>
-
 ## License
 Please refer to the [LICENSE.md](https://github.com/warior456/WildSprout-Plains/blob/master/LICENSE.md) file for licensing details.
 
