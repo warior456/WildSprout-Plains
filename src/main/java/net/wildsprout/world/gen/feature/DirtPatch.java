@@ -41,7 +41,7 @@ public class DirtPatch extends Feature<DefaultFeatureConfig> {
                 int j = structureWorldAccess.getChunk(new BlockPos(x + i,y,z + k)).getHeightmap(Heightmap.Type.WORLD_SURFACE_WG).get((32+i+x%16)%16, (32+k+z%16)%16);
                 BlockPos pos = new BlockPos(x+i,j -1,z+k);
 
-                if (!(structureWorldAccess.getBlockState(pos).isIn(ModTags.Blocks.CAN_BE_REPLACED))) continue;
+                if (!(structureWorldAccess.getBlockState(pos).isIn(ModTags.Blocks.CAN_BE_REPLACED_SOLID))) continue;
 
                 double noiseSample = dirtPatchesNoise.sample(pos.getX(), pos.getY(), pos.getZ());
                 if (random.nextDouble() < noiseSample*10 -5){

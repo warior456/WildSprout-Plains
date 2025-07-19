@@ -1,24 +1,43 @@
 package net.wildsprout.world.gen.feature;
 
 import com.mojang.serialization.Codec;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SnowBlock;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.noise.DoublePerlinNoiseSampler;
 import net.minecraft.util.math.random.CheckedRandom;
 import net.minecraft.util.math.random.ChunkRandom;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.WorldView;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
+
+import static net.minecraft.block.SnowBlock.LAYERS;
 
 
 public class FluffySnow extends Feature<DefaultFeatureConfig> {
 
     public FluffySnow(Codec<DefaultFeatureConfig> configCodec) {
         super(configCodec);
+    }
+
+    protected boolean canPlaceAt(StructureWorldAccess world, BlockPos pos) {
+        BlockState blockState = world.getBlockState(pos.down());
+        if (blockState.isIn(BlockTags.SNOW_LAYER_CANNOT_SURVIVE_ON)) {
+            return false;
+        } else if (blockState.isIn(BlockTags.SNOW_LAYER_CAN_SURVIVE_ON)) {
+            return true;
+        } else {
+            return Block.isFaceFullSquare(blockState.getCollisionShape(world, pos.down()), Direction.UP) || blockState.isOf(Blocks.SNOW) && (Integer)blockState.get(LAYERS) == 8;
+        }
     }
 
     public boolean generate(FeatureContext<DefaultFeatureConfig> context) {
@@ -41,10 +60,11 @@ public class FluffySnow extends Feature<DefaultFeatureConfig> {
                 BlockPos pos = new BlockPos(x+i,j,z+k);
 
                 if (!(structureWorldAccess.getBlockState(pos).equals(Blocks.SNOW.getDefaultState()) ||structureWorldAccess.getBlockState(pos).equals(Blocks.AIR.getDefaultState()))) continue;
+                if (!canPlaceAt(structureWorldAccess,pos)) continue;
 
                 int snowlayers = (int)Math.round(Math.clamp(snowNoise.sample(pos.getX(), pos.getY(), pos.getZ())+0.5,0,2)*3) + random.nextInt(2)+1;
 
-                this.setBlockState(structureWorldAccess, pos, Blocks.SNOW.getDefaultState().with(SnowBlock.LAYERS, snowlayers));
+                this.setBlockState(structureWorldAccess, pos, Blocks.SNOW.getDefaultState().with(LAYERS, snowlayers));
 
             }
         }
@@ -55,10 +75,11 @@ public class FluffySnow extends Feature<DefaultFeatureConfig> {
                 BlockPos pos = new BlockPos(x+i,j,z+k);
 
                 if (!(structureWorldAccess.getBlockState(pos).equals(Blocks.SNOW.getDefaultState()) || structureWorldAccess.getBlockState(pos).equals(Blocks.AIR.getDefaultState()))) continue;
+                if (!canPlaceAt(structureWorldAccess,pos)) continue;
 
                 int snowlayers = (int)Math.round(Math.clamp(snowNoise.sample(pos.getX(), pos.getY(), pos.getZ())+0.5,0,2)*3) + random.nextInt(2)+1;
 
-                this.setBlockState(structureWorldAccess, pos, Blocks.SNOW.getDefaultState().with(SnowBlock.LAYERS, snowlayers));
+                this.setBlockState(structureWorldAccess, pos, Blocks.SNOW.getDefaultState().with(LAYERS, snowlayers));
 
             }
         }

@@ -55,9 +55,9 @@ public class Lake extends Feature<DefaultFeatureConfig> {
             double distance = pos.getSquaredDistance(pos2);
 
             if (distance <= radius * radius + noise.sample(pos2.getX(), pos2.getY(), pos2.getZ())+0.7) {
-                if ((structureWorldAccess.getBlockState(pos2).equals(Blocks.WATER.getDefaultState()) || structureWorldAccess.getBlockState(pos2).equals(Blocks.AIR.getDefaultState())) &&
-                        !(structureWorldAccess.getBlockState(pos2.down()).equals(Blocks.WATER.getDefaultState()) ||structureWorldAccess.getBlockState(pos2.down()).equals(Blocks.AIR.getDefaultState())) &&
-                        (structureWorldAccess.getBlockState(pos2.up()).equals(Blocks.WATER.getDefaultState()) || structureWorldAccess.getBlockState(pos2.up()).equals(Blocks.AIR.getDefaultState()))){
+                if ((structureWorldAccess.getBlockState(pos2).equals(Blocks.WATER.getDefaultState()) || structureWorldAccess.getBlockState(pos2).isIn(ModTags.Blocks.CAN_BE_REPLACED_NON_SOLID)) &&
+                        (structureWorldAccess.getBlockState(pos2.down()).isIn(ModTags.Blocks.VALID_ROCK_GENERATE_SLAB_ON)) &&
+                        (structureWorldAccess.getBlockState(pos2.up()).equals(Blocks.WATER.getDefaultState()) || structureWorldAccess.getBlockState(pos2.up()).isIn(ModTags.Blocks.CAN_BE_REPLACED_NON_SOLID))){
                     BlockState block = Blocks.MOSSY_COBBLESTONE_SLAB.getDefaultState().with(WATERLOGGED, structureWorldAccess.getBlockState(pos2).equals(Blocks.WATER.getDefaultState()));
                     structureWorldAccess.setBlockState(pos2, block,2);
                 }
@@ -159,7 +159,7 @@ public class Lake extends Feature<DefaultFeatureConfig> {
 
         center = new BlockPos(center.getX(),j,center.getZ());
 
-        if (!(structureWorldAccess.getBlockState(center.down()).isIn(ModTags.Blocks.CAN_BE_REPLACED))) return false;
+        if (!(structureWorldAccess.getBlockState(center.down()).isIn(ModTags.Blocks.VALID_PLAINS_GENERATE_BLOCK))) return false;
 
 
         ChunkRandom chunkRandom = new ChunkRandom(new CheckedRandom(structureWorldAccess.getSeed()));

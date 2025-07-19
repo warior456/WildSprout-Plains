@@ -61,12 +61,12 @@ public class ModWorldGeneration {
                 );
 
         // REMOVE FEATURES
-        BiomeModifications.create(WildSproutPlains.identifier("no_lava_spring")).add( ModificationPhase.REMOVALS,BiomeSelectors.includeByKey(BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.SUNFLOWER_PLAINS),
+        BiomeModifications.create(WildSproutPlains.identifier("no_lava_spring")).add( ModificationPhase.REMOVALS,BiomeSelectors.includeByKey(BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.SNOWY_PLAINS),
                 context -> {
                     context.getGenerationSettings().removeFeature(
                             GenerationStep.Feature.FLUID_SPRINGS, MiscPlacedFeatures.SPRING_LAVA);});
 
-        BiomeModifications.create(WildSproutPlains.identifier("no_lava_lake")).add( ModificationPhase.REMOVALS,BiomeSelectors.includeByKey(BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.SUNFLOWER_PLAINS),
+        BiomeModifications.create(WildSproutPlains.identifier("no_lava_lake")).add( ModificationPhase.REMOVALS,BiomeSelectors.includeByKey(BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.SNOWY_PLAINS),
                 context -> {
                     context.getGenerationSettings().removeFeature(
                             GenerationStep.Feature.LAKES, MiscPlacedFeatures.LAKE_LAVA_SURFACE);});

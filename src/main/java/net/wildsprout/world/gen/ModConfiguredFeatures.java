@@ -15,6 +15,7 @@ import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.placementmodifier.BlockFilterPlacementModifier;
 import net.minecraft.world.gen.stateprovider.BlockStateProvider;
 import net.wildsprout.WildSproutPlains;
+import net.wildsprout.tags.ModTags;
 
 import java.util.List;
 
@@ -58,7 +59,7 @@ public class ModConfiguredFeatures {
                                                 // Predicate 1: current block is air
                                                 BlockPredicate.matchingBlocks(Blocks.AIR),
                                                 // Predicate 2: block below is grass
-                                                BlockPredicate.matchingBlocks(new BlockPos(0, -1, 0), Blocks.GRASS_BLOCK)
+                                                BlockPredicate.matchingBlockTag(new BlockPos(0, -1, 0), ModTags.Blocks.VALID_PLAINS_GENERATE_BLOCK)
                                         )
                                 )
                         )
@@ -67,7 +68,7 @@ public class ModConfiguredFeatures {
         register(context, SMALL_RIVER_KEY, ModFeatures.SMALL_RIVER, new DefaultFeatureConfig());
         register(context, LAKE_KEY, ModFeatures.LAKE, new DefaultFeatureConfig());
         register(context, RANDOM_PATH_KEY, ModFeatures.RANDOM_PATH, new DefaultFeatureConfig());
-        register(context, BERRY_PATCH_KEY, Feature.RANDOM_PATCH, new RandomPatchFeatureConfig(256, 20, 4, PlacedFeatures.createEntry(Feature.SIMPLE_BLOCK,
+        register(context, BERRY_PATCH_KEY, Feature.RANDOM_PATCH, new RandomPatchFeatureConfig(256, 16, 4, PlacedFeatures.createEntry(Feature.SIMPLE_BLOCK,
                 new SimpleBlockFeatureConfig(BlockStateProvider.of(Blocks.SWEET_BERRY_BUSH.getDefaultState().with(SweetBerryBushBlock.AGE,3))),
                 BlockPredicate.allOf(new BlockPredicate[]{BlockPredicate.matchingBlocks(Direction.DOWN.getVector(), new Block[]{Blocks.GRASS_BLOCK})}))));
         register(context, FLUFFY_SNOW_KEY, ModFeatures.FLUFFY_SNOW, new DefaultFeatureConfig());

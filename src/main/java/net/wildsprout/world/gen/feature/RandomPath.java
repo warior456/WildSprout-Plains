@@ -61,7 +61,7 @@ public class RandomPath extends Feature<DefaultFeatureConfig> {
         BlockPos center = context.getOrigin();
         Random random = context.getRandom();
 
-        if (!(structureWorldAccess.getBlockState(center.down()).isIn(ModTags.Blocks.CAN_BE_REPLACED))) return false;
+        if (!(structureWorldAccess.getBlockState(center.down()).isIn(ModTags.Blocks.VALID_PLAINS_GENERATE_BLOCK))) return false;
 
         if (random.nextBoolean()) {
             this.pos0 = center.toCenterPos().add(3+random.nextInt(13), 0, 3+random.nextInt(13));

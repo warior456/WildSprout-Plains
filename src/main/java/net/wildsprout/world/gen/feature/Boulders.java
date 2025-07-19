@@ -39,6 +39,7 @@ public class Boulders extends Feature<DefaultFeatureConfig> {
 
             // Carve a rough sphere
             if (distance <= radius * radius + noise.sample(pos.getX(), pos.getY(), pos.getZ())*radius*14) {
+                if (!structureWorldAccess.getBlockState(pos).isIn(ModTags.Blocks.CAN_BE_REPLACED_ALL)) continue;
                 this.setBlockState(structureWorldAccess,pos,block);
             }
         }
@@ -54,7 +55,7 @@ public class Boulders extends Feature<DefaultFeatureConfig> {
 
         center = new BlockPos(center.getX(),j,center.getZ());
 
-        if (!(structureWorldAccess.getBlockState(center.down()).isIn(ModTags.Blocks.CAN_BE_REPLACED))) return false;
+        if (!(structureWorldAccess.getBlockState(center.down()).isIn(ModTags.Blocks.VALID_PLAINS_GENERATE_BLOCK))) return false;
 
         List<BlockState> possibleBlocks = new ArrayList<>();
         possibleBlocks.add(Blocks.STONE.getDefaultState());

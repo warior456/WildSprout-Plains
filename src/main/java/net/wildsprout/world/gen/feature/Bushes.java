@@ -25,7 +25,7 @@ public class Bushes extends Feature<DefaultFeatureConfig> {
 
     static List<Double> radiusOptions = List.of(0.9D, 1.2D, 1.3D);
     public void generateBush(StructureWorldAccess structureWorldAccess, Random random, BlockPos pos, DoublePerlinNoiseSampler noise){
-        if (!(structureWorldAccess.getBlockState(pos.down()).isIn(ModTags.Blocks.CAN_BE_REPLACED))) return;
+        if (!(structureWorldAccess.getBlockState(pos.down()).isIn(ModTags.Blocks.VALID_PLAINS_GENERATE_BLOCK))) return;
 
         int bushSelector = random.nextBetween(0, radiusOptions.size() - 1);
         if(bushSelector ==0){

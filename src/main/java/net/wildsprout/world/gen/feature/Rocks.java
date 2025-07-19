@@ -38,7 +38,7 @@ public class Rocks extends Feature<DefaultFeatureConfig> {
 
             // Carve a rough sphere
             if (distance <= radius * radius + noise.sample(pos.getX(), pos.getY(), pos.getZ())) {
-                if (!structureWorldAccess.getBlockState(pos).isIn(ModTags.Blocks.CAN_BE_REPLACED)) continue;
+                if (!structureWorldAccess.getBlockState(pos).isIn(ModTags.Blocks.CAN_BE_REPLACED_ALL)) continue;
                 structureWorldAccess.setBlockState(pos, block,2);
             }
         }
@@ -48,7 +48,7 @@ public class Rocks extends Feature<DefaultFeatureConfig> {
 
             if (distance <= radius * radius + noise.sample(pos.getX(), pos.getY(), pos.getZ())+0.7) {
                 if (structureWorldAccess.getBlockState(pos).isIn(ModTags.Blocks.CAN_BE_REPLACED_NON_SOLID) &&
-                        !(structureWorldAccess.getBlockState(pos.down()).isIn(ModTags.Blocks.CAN_BE_REPLACED_NON_SOLID)) && //todo: check for slab under
+                        (structureWorldAccess.getBlockState(pos.down()).isIn(ModTags.Blocks.VALID_ROCK_GENERATE_SLAB_ON)) && //todo: check for slab under
                         structureWorldAccess.getBlockState(pos.up()).isIn(ModTags.Blocks.CAN_BE_REPLACED_NON_SOLID)){
                     structureWorldAccess.setBlockState(pos, slab,2);
                 }
@@ -66,7 +66,7 @@ public class Rocks extends Feature<DefaultFeatureConfig> {
 
         center = new BlockPos(center.getX(),j,center.getZ());
 
-        if (!(structureWorldAccess.getBlockState(center.down()).isIn(ModTags.Blocks.CAN_BE_REPLACED))) return false;
+        if (!(structureWorldAccess.getBlockState(center.down()).isIn(ModTags.Blocks.VALID_PLAINS_GENERATE_BLOCK))) return false;
 
         center = center.down();
 

@@ -20,12 +20,37 @@ public class ModBlockTagProvider extends FabricTagProvider.BlockTagProvider {
 
         getOrCreateTagBuilder(ModTags.Blocks.CAN_BE_REPLACED_NON_SOLID)
                 .add(Blocks.AIR)
-                .add(Blocks.SHORT_GRASS);
+                .add(Blocks.SHORT_GRASS)
+                .add(Blocks.SNOW);
 
-        getOrCreateTagBuilder(ModTags.Blocks.CAN_BE_REPLACED)
-                .addTag(ModTags.Blocks.CAN_BE_REPLACED_NON_SOLID)
+        getOrCreateTagBuilder(ModTags.Blocks.CAN_BE_REPLACED_SOLID)
                 .add(Blocks.GRASS_BLOCK)
                 .add(Blocks.DIRT)
                 .add(Blocks.COARSE_DIRT);
+
+        getOrCreateTagBuilder(ModTags.Blocks.CAN_BE_REPLACED_ALL)
+                .addTag(ModTags.Blocks.CAN_BE_REPLACED_NON_SOLID)
+                .addTag(ModTags.Blocks.CAN_BE_REPLACED_SOLID);
+
+        getOrCreateTagBuilder(ModTags.Blocks.VALID_PLAINS_GENERATE_BLOCK)
+                .add(Blocks.GRASS_BLOCK)
+                .add(Blocks.DIRT)
+                .add(Blocks.COARSE_DIRT);
+
+        getOrCreateTagBuilder(BlockTags.SNOW_LAYER_CANNOT_SURVIVE_ON)
+                .setReplace(true)
+                .add(Blocks.BARRIER);
+
+        getOrCreateTagBuilder(ModTags.Blocks.VALID_ROCK_GENERATE_SLAB_ON)
+                .addTag(ModTags.Blocks.CAN_BE_REPLACED_SOLID)
+                .add(Blocks.MUD)
+                .add(Blocks.STONE)
+                .add(Blocks.MOSSY_COBBLESTONE)
+                .add(Blocks.TUFF)
+                .add(Blocks.DIORITE)
+                .add(Blocks.ANDESITE)
+                .add(Blocks.GRANITE);
+
+
     }
 }
