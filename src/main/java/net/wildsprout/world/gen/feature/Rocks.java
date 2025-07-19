@@ -48,7 +48,7 @@ public class Rocks extends Feature<DefaultFeatureConfig> {
 
             if (distance <= radius * radius + noise.sample(pos.getX(), pos.getY(), pos.getZ())+0.7) {
                 if (structureWorldAccess.getBlockState(pos).isIn(ModTags.Blocks.CAN_BE_REPLACED_NON_SOLID) &&
-                        (structureWorldAccess.getBlockState(pos.down()).isIn(ModTags.Blocks.VALID_ROCK_GENERATE_SLAB_ON)) && //todo: check for slab under
+                        (structureWorldAccess.getBlockState(pos.down()).isIn(ModTags.Blocks.VALID_ROCK_GENERATE_SLAB_ON)) &&
                         structureWorldAccess.getBlockState(pos.up()).isIn(ModTags.Blocks.CAN_BE_REPLACED_NON_SOLID)){
                     structureWorldAccess.setBlockState(pos, slab,2);
                 }
