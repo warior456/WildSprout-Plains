@@ -3,7 +3,7 @@
 	"id": "wildsprout-plains",
 	"version": "${version}",
 	"name": "WildSprout: Plains",
-	"description": "Improves the vanilla plains biome",
+	"description": "Improves the vanilla plains biome\nYou can find the config in the config folder",
 	"authors": [
 		"Matteo_fey (warior456)",
 		"gems_bond"
@@ -17,13 +17,13 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"net.wildsprout.WildSproutPlains"
+			"net.ugi.wildsprout.WildSproutPlains"
 		],
 		"client": [
-			"net.wildsprout.WildSproutPlainsClient"
+			"net.ugi.wildsprout.WildSproutPlainsClient"
 		],
 		"fabric-datagen": [
-			"net.wildsprout.WildSproutPlainsDataGenerator"
+			"net.ugi.wildsprout.WildSproutPlainsDataGenerator"
 		]
 	},
 	"mixins": [

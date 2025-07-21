@@ -1,0 +1,14 @@
+package net.ugi.wildsprout.config;
+
+public class ConfigHandler {
+    public int config_version = 1;
+
+    @Comment("-----------Enable and disable biomes-----------\n")
+    public boolean PlainsEnabled = true;
+    public boolean SunFlowerPlainsEnabled = true;
+    public boolean SnowyPlainsEnabled = true;
+
+    @Comment("-----------Disable features-----------\n\nEnables or disables Snow being able to generate on ice")
+    public boolean SnowOnIceEnabled = true;
+
+}
