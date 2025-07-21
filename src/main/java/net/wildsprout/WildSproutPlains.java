@@ -36,6 +36,6 @@ public class WildSproutPlains implements ModInitializer {
 
 
 
-		Registry.register(Registries.STRUCTURE_TYPE, WildSproutPlains.identifier("river"), ModStructureTypes.RIVER);
+		//Registry.register(Registries.STRUCTURE_TYPE, WildSproutPlains.identifier("river"), ModStructureTypes.RIVER);
 	}
 }
