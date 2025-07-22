@@ -33,7 +33,7 @@ public class FluffySnow extends Feature<DefaultFeatureConfig> {
 
     protected boolean canPlaceAt(StructureWorldAccess world, BlockPos pos) {
         BlockState blockState = world.getBlockState(pos.down());
-        if (blockState.isIn(ModTags.Blocks.OVERRIDE_SNOW_LAYER_CANNOT_SURVIVE_ON) && WildSproutPlains.CONFIG.SnowOnIceEnabled) {
+        if (blockState.isIn(ModTags.Blocks.OVERRIDE_SNOW_LAYER_CANNOT_SURVIVE_ON) && WildSproutPlains.CONFIG.SnowOnIceEnabled && WildSproutPlains.CONFIG.SnowyPlainsEnabled) {
             // Allow snow to be placed on ice, packed ice, and blue ice in worldgen
             // see mixin SnowPlacementMixin (this is so that the snow doesn't break after it's placed)
             return true;
@@ -75,15 +75,18 @@ public class FluffySnow extends Feature<DefaultFeatureConfig> {
                 }
 
                 if (structureWorldAccess.getBlockState(pos.down()).isIn(BlockTags.LEAVES)){
-                    j = structureWorldAccess.getChunk(new BlockPos(x + i,y,z + k)).getHeightmap(Heightmap.Type.WORLD_SURFACE_WG).get((32+i+x%16)%16, (32+k+z%16)%16);
-                    pos = new BlockPos(x+i,j,z+k);
+                    int j2 = structureWorldAccess.getChunk(new BlockPos(x + i,y,z + k)).getHeightmap(Heightmap.Type.WORLD_SURFACE_WG).get((32+i+x%16)%16, (32+k+z%16)%16);
+                    int difference = j - j2;
+                    for (int j3 = 0; j3 <= difference; j3++) {
 
-                    if ((structureWorldAccess.getBlockState(pos).equals(Blocks.SNOW.getDefaultState()) || structureWorldAccess.getBlockState(pos).equals(Blocks.AIR.getDefaultState()))){
-                        if (canPlaceAt(structureWorldAccess,pos)){
+                        // Place snow layers below the leaves
+                        BlockPos posBelow = new BlockPos(x + i, j - j3, z + k);
+                        if ((structureWorldAccess.getBlockState(posBelow).equals(Blocks.SNOW.getDefaultState()) || structureWorldAccess.getBlockState(posBelow).equals(Blocks.AIR.getDefaultState()))){
+                            if (canPlaceAt(structureWorldAccess,posBelow)){
 
-                        int snowlayers = (int)Math.round(Math.clamp(snowNoise.sample(pos.getX(), pos.getY(), pos.getZ())+0.5,0,2)*3) + random.nextInt(2)+1;
-
-                        this.setBlockState(structureWorldAccess, pos, Blocks.SNOW.getDefaultState().with(LAYERS, snowlayers));
+                                int snowlayers = (int)Math.round(Math.clamp(snowNoise.sample(posBelow.getX(), posBelow.getY(), posBelow.getZ())+0.5,0,2)*3) + random.nextInt(2)+1;
+                                this.setBlockState(structureWorldAccess, posBelow, Blocks.SNOW.getDefaultState().with(LAYERS, snowlayers));
+                            }
                         }
                     }
 

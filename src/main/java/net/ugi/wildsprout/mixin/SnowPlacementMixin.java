@@ -17,7 +17,7 @@ public class SnowPlacementMixin {
     private void onCanPlaceAt(net.minecraft.block.BlockState state, WorldView world, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
         //this mixin allows snow to be placed on ice, packed ice, and blue ice in worldgen, needed for the fluffy snow feature
         BlockState blockState = world.getBlockState(pos.down());
-        if (blockState.isIn(ModTags.Blocks.OVERRIDE_SNOW_LAYER_CANNOT_SURVIVE_ON) && WildSproutPlains.CONFIG.SnowOnIceEnabled) {
+        if (blockState.isIn(ModTags.Blocks.OVERRIDE_SNOW_LAYER_CANNOT_SURVIVE_ON) && WildSproutPlains.CONFIG.SnowOnIceEnabled && WildSproutPlains.CONFIG.SnowyPlainsEnabled) {
             cir.setReturnValue(true);
         }
     }
