@@ -16,6 +16,12 @@ A mod that improves the vanilla plains biome
 - sunflower plains
 - snowy plains
 
+## CONFIGURATION
+This mod has a config in the config folder,
+you can currently disable each affected biome and some of the features
+
+After editing you have to restart the game to apply changes!!
+
 ## License
 Please refer to the [LICENSE.md](https://github.com/warior456/WildSprout-Plains/blob/master/LICENSE.md) file for licensing details.
 
