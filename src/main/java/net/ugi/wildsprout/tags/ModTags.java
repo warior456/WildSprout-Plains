@@ -27,6 +27,9 @@ public class ModTags {
         public static final TagKey<Block> VALID_ROCK_GENERATE_SLAB_ON =
                 createTag("valid_rock_generate_slab_on");
 
+        public static final TagKey<Block> OVERRIDE_SNOW_LAYER_CANNOT_SURVIVE_ON =
+                createTag("override_snow_layer_cannot_survive_on");
+
         private static TagKey<Block> createTag(String name) {
             return TagKey.of(RegistryKeys.BLOCK, WildSproutPlains.identifier( name));
         }

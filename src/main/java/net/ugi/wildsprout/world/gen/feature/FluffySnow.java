@@ -19,6 +19,8 @@ import net.minecraft.world.WorldView;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
+import net.ugi.wildsprout.WildSproutPlains;
+import net.ugi.wildsprout.tags.ModTags;
 
 import static net.minecraft.block.SnowBlock.LAYERS;
 
@@ -31,6 +33,11 @@ public class FluffySnow extends Feature<DefaultFeatureConfig> {
 
     protected boolean canPlaceAt(StructureWorldAccess world, BlockPos pos) {
         BlockState blockState = world.getBlockState(pos.down());
+        if (blockState.isIn(ModTags.Blocks.OVERRIDE_SNOW_LAYER_CANNOT_SURVIVE_ON) && WildSproutPlains.CONFIG.SnowOnIceEnabled) {
+            // Allow snow to be placed on ice, packed ice, and blue ice in worldgen
+            // see mixin SnowPlacementMixin (this is so that the snow doesn't break after it's placed)
+            return true;
+        }
         if (blockState.isIn(BlockTags.SNOW_LAYER_CANNOT_SURVIVE_ON)) {
             return false;
         } else if (blockState.isIn(BlockTags.SNOW_LAYER_CAN_SURVIVE_ON)) {

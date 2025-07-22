@@ -37,9 +37,10 @@ public class ModBlockTagProvider extends FabricTagProvider.BlockTagProvider {
                 .add(Blocks.DIRT)
                 .add(Blocks.COARSE_DIRT);
 
-        getOrCreateTagBuilder(BlockTags.SNOW_LAYER_CANNOT_SURVIVE_ON)
-                .setReplace(true)
-                .add(Blocks.BARRIER);
+        getOrCreateTagBuilder(ModTags.Blocks.OVERRIDE_SNOW_LAYER_CANNOT_SURVIVE_ON)
+                .add(Blocks.ICE)
+                .add(Blocks.PACKED_ICE)
+                .add(Blocks.BLUE_ICE);
 
         getOrCreateTagBuilder(ModTags.Blocks.VALID_ROCK_GENERATE_SLAB_ON)
                 .addTag(ModTags.Blocks.CAN_BE_REPLACED_SOLID)
