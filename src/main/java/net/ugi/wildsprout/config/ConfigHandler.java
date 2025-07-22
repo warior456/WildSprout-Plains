@@ -10,5 +10,7 @@ public class ConfigHandler {
 
     @Comment("-----------Disable features-----------\n\nEnables or disables Snow being able to generate on ice")
     public boolean SnowOnIceEnabled = true;
+    @Comment("Enables or disables snow generating in layers in the snowy plains")
+    public boolean LayeredSnowEnabled = true;
 
 }

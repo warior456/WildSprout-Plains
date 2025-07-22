@@ -16,13 +16,25 @@ import java.util.List;
 public class ModWorldGeneration {
     public static void generateModWorldGen() {
         List<RegistryKey<Biome>> allEnabled = new ArrayList<>();
-        if(WildSproutPlains.CONFIG.PlainsEnabled) allEnabled.add(BiomeKeys.PLAINS);
-        if(WildSproutPlains.CONFIG.SnowyPlainsEnabled) allEnabled.add(BiomeKeys.SNOWY_PLAINS);
-        if(WildSproutPlains.CONFIG.SunFlowerPlainsEnabled) allEnabled.add(BiomeKeys.SUNFLOWER_PLAINS);
+        List<RegistryKey<Biome>> snowyIfEnabled = new ArrayList<>();
+        List<RegistryKey<Biome>> normalIfEnabled = new ArrayList<>();
+
+        if(WildSproutPlains.CONFIG.PlainsEnabled) {
+            allEnabled.add(BiomeKeys.PLAINS);
+            normalIfEnabled.add(BiomeKeys.PLAINS);
+        }
+        if(WildSproutPlains.CONFIG.SnowyPlainsEnabled) {
+            allEnabled.add(BiomeKeys.SNOWY_PLAINS);
+            snowyIfEnabled.add(BiomeKeys.SNOWY_PLAINS);
+        }
+        if(WildSproutPlains.CONFIG.SunFlowerPlainsEnabled) {
+            allEnabled.add(BiomeKeys.SUNFLOWER_PLAINS);
+            normalIfEnabled.add(BiomeKeys.SUNFLOWER_PLAINS);
+        }
 
 
         //RAW GENERATION
-        BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS), GenerationStep.Feature.RAW_GENERATION, ModPlacedFeatures.LAKE_PLACED_KEY);
+        BiomeModifications.addFeature(BiomeSelectors.includeByKey(normalIfEnabled), GenerationStep.Feature.RAW_GENERATION, ModPlacedFeatures.LAKE_PLACED_KEY);
 
         //LAKES
 
@@ -45,18 +57,20 @@ public class ModWorldGeneration {
 
         //VEGETAL DECORATION
         BiomeModifications.addFeature(BiomeSelectors.includeByKey(allEnabled), GenerationStep.Feature.VEGETAL_DECORATION, ModPlacedFeatures.BUSHES_PLACED_KEY);
-        BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS), GenerationStep.Feature.VEGETAL_DECORATION, ModPlacedFeatures.WHEAT_PATCH_PLACED_KEY);
-        BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS), GenerationStep.Feature.VEGETAL_DECORATION, ModPlacedFeatures.RANDOM_PATH_PLACED_KEY);
-        BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.SNOWY_PLAINS), GenerationStep.Feature.VEGETAL_DECORATION, ModPlacedFeatures.BERRY_PATCH_PLACED_KEY);
+        BiomeModifications.addFeature(BiomeSelectors.includeByKey(normalIfEnabled), GenerationStep.Feature.VEGETAL_DECORATION, ModPlacedFeatures.WHEAT_PATCH_PLACED_KEY);
+        BiomeModifications.addFeature(BiomeSelectors.includeByKey(normalIfEnabled), GenerationStep.Feature.VEGETAL_DECORATION, ModPlacedFeatures.RANDOM_PATH_PLACED_KEY);
+        BiomeModifications.addFeature(BiomeSelectors.includeByKey(snowyIfEnabled), GenerationStep.Feature.VEGETAL_DECORATION, ModPlacedFeatures.BERRY_PATCH_PLACED_KEY);
 
         //TOP LAYER MODIFICATION
-        BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.SNOWY_PLAINS), GenerationStep.Feature.TOP_LAYER_MODIFICATION, ModPlacedFeatures.FLUFFY_SNOW_PLACED_KEY);
+        if(WildSproutPlains.CONFIG.LayeredSnowEnabled) {
+            BiomeModifications.addFeature(BiomeSelectors.includeByKey(snowyIfEnabled), GenerationStep.Feature.TOP_LAYER_MODIFICATION, ModPlacedFeatures.FLUFFY_SNOW_PLACED_KEY);
+        }
         //BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS), GenerationStep.Feature.TOP_LAYER_MODIFICATION, ModPlacedFeatures.SMALL_RIVER_PLACED_KEY);
 
         //MODIFY FEATURES
         BiomeModifications.create(WildSproutPlains.identifier("pumpkin_patch"))
                 .add(ModificationPhase.REPLACEMENTS,
-                        BiomeSelectors.includeByKey(BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS),
+                        BiomeSelectors.includeByKey(normalIfEnabled),
                         context -> {
                             // Identify the original feature to replace.
                             context.getGenerationSettings().removeFeature(
