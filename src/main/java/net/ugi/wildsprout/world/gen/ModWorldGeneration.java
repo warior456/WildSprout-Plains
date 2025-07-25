@@ -95,10 +95,20 @@ public class ModWorldGeneration {
                     context.getGenerationSettings().removeFeature(
                             GenerationStep.Feature.FLUID_SPRINGS, MiscPlacedFeatures.SPRING_LAVA);});
 
-        BiomeModifications.create(WildSproutPlains.identifier("no_lava_lake")).add( ModificationPhase.REMOVALS,BiomeSelectors.includeByKey(allEnabled),
+        BiomeModifications.create(WildSproutPlains.identifier("no_lava_lake_surface")).add( ModificationPhase.REMOVALS,BiomeSelectors.includeByKey(allEnabled),
                 context -> {
                     context.getGenerationSettings().removeFeature(
                             GenerationStep.Feature.LAKES, MiscPlacedFeatures.LAKE_LAVA_SURFACE);});
+
+        BiomeModifications.create(WildSproutPlains.identifier("no_lava_lake_underground")).add( ModificationPhase.REMOVALS,BiomeSelectors.includeByKey(allEnabled),
+                context -> {
+                    context.getGenerationSettings().removeFeature(
+                            GenerationStep.Feature.LAKES, MiscPlacedFeatures.LAKE_LAVA_UNDERGROUND);});
+
+        BiomeModifications.create(WildSproutPlains.identifier("no_flowers")).add( ModificationPhase.REMOVALS,BiomeSelectors.includeByKey(snowyIfEnabled),
+                context -> {
+                    context.getGenerationSettings().removeFeature(
+                            GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.FLOWER_DEFAULT);});
 
 
     }
