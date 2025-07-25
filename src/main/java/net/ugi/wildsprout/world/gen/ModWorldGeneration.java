@@ -57,7 +57,11 @@ public class ModWorldGeneration {
 
         //VEGETAL DECORATION
         BiomeModifications.addFeature(BiomeSelectors.includeByKey(allEnabled), GenerationStep.Feature.VEGETAL_DECORATION, ModPlacedFeatures.BUSHES_PLACED_KEY);
-        BiomeModifications.addFeature(BiomeSelectors.includeByKey(normalIfEnabled), GenerationStep.Feature.VEGETAL_DECORATION, ModPlacedFeatures.WHEAT_PATCH_PLACED_KEY);
+
+        if(WildSproutPlains.CONFIG.WheatFieldsEnabled) {
+            BiomeModifications.addFeature(BiomeSelectors.includeByKey(normalIfEnabled), GenerationStep.Feature.VEGETAL_DECORATION, ModPlacedFeatures.WHEAT_PATCH_PLACED_KEY);
+        }
+
         BiomeModifications.addFeature(BiomeSelectors.includeByKey(normalIfEnabled), GenerationStep.Feature.VEGETAL_DECORATION, ModPlacedFeatures.RANDOM_PATH_PLACED_KEY);
         BiomeModifications.addFeature(BiomeSelectors.includeByKey(snowyIfEnabled), GenerationStep.Feature.VEGETAL_DECORATION, ModPlacedFeatures.BERRY_PATCH_PLACED_KEY);
 
