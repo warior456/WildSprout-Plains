@@ -34,13 +34,18 @@ public class ModWorldGeneration {
 
 
         //RAW GENERATION
-        BiomeModifications.addFeature(BiomeSelectors.includeByKey(normalIfEnabled), GenerationStep.Feature.RAW_GENERATION, ModPlacedFeatures.LAKE_PLACED_KEY);
-
         //LAKES
+        if(WildSproutPlains.CONFIG.LakesEnabled){
+            BiomeModifications.addFeature(BiomeSelectors.includeByKey(normalIfEnabled), GenerationStep.Feature.RAW_GENERATION, ModPlacedFeatures.LAKE_PLACED_KEY);
+        }
 
         //LOCAL MODIFICATIONS
-        BiomeModifications.addFeature(BiomeSelectors.includeByKey(allEnabled), GenerationStep.Feature.LOCAL_MODIFICATIONS, ModPlacedFeatures.BOULDERS_PLACED_KEY);
-        BiomeModifications.addFeature(BiomeSelectors.includeByKey(allEnabled), GenerationStep.Feature.LOCAL_MODIFICATIONS, ModPlacedFeatures.ROCKS_PLACED_KEY);
+        if(WildSproutPlains.CONFIG.BouldersEnabled) {
+            BiomeModifications.addFeature(BiomeSelectors.includeByKey(allEnabled), GenerationStep.Feature.LOCAL_MODIFICATIONS, ModPlacedFeatures.BOULDERS_PLACED_KEY);
+        }
+        if(WildSproutPlains.CONFIG.RocksEnabled) {
+            BiomeModifications.addFeature(BiomeSelectors.includeByKey(allEnabled), GenerationStep.Feature.LOCAL_MODIFICATIONS, ModPlacedFeatures.ROCKS_PLACED_KEY);
+        }
 
         //UNDERGOUNDS STRUCTURES
 
@@ -49,21 +54,27 @@ public class ModWorldGeneration {
         //STRONGHOLDS
 
         //UNDERGOUND ORES
-        BiomeModifications.addFeature(BiomeSelectors.includeByKey(allEnabled), GenerationStep.Feature.UNDERGROUND_ORES, ModPlacedFeatures.DIRT_PATCH_PLACED_KEY);
-
+        if(WildSproutPlains.CONFIG.DirtPatchesEnabled){
+            BiomeModifications.addFeature(BiomeSelectors.includeByKey(allEnabled), GenerationStep.Feature.UNDERGROUND_ORES, ModPlacedFeatures.DIRT_PATCH_PLACED_KEY);
+        }
         //UNDERGROUND DECORATION
 
         //FLUID SPRINGS
 
         //VEGETAL DECORATION
-        BiomeModifications.addFeature(BiomeSelectors.includeByKey(allEnabled), GenerationStep.Feature.VEGETAL_DECORATION, ModPlacedFeatures.BUSHES_PLACED_KEY);
-
+        if(WildSproutPlains.CONFIG.BushesEnabled){
+            BiomeModifications.addFeature(BiomeSelectors.includeByKey(allEnabled), GenerationStep.Feature.VEGETAL_DECORATION, ModPlacedFeatures.BUSHES_PLACED_KEY);
+        }
         if(WildSproutPlains.CONFIG.WheatFieldsEnabled) {
             BiomeModifications.addFeature(BiomeSelectors.includeByKey(normalIfEnabled), GenerationStep.Feature.VEGETAL_DECORATION, ModPlacedFeatures.WHEAT_PATCH_PLACED_KEY);
         }
+        if(WildSproutPlains.CONFIG.RandomPathsEnabled){
+            BiomeModifications.addFeature(BiomeSelectors.includeByKey(normalIfEnabled), GenerationStep.Feature.VEGETAL_DECORATION, ModPlacedFeatures.RANDOM_PATH_PLACED_KEY);
+        }
+        if(WildSproutPlains.CONFIG.BerryPatchesEnabled){
+            BiomeModifications.addFeature(BiomeSelectors.includeByKey(snowyIfEnabled), GenerationStep.Feature.VEGETAL_DECORATION, ModPlacedFeatures.BERRY_PATCH_PLACED_KEY);
+        }
 
-        BiomeModifications.addFeature(BiomeSelectors.includeByKey(normalIfEnabled), GenerationStep.Feature.VEGETAL_DECORATION, ModPlacedFeatures.RANDOM_PATH_PLACED_KEY);
-        BiomeModifications.addFeature(BiomeSelectors.includeByKey(snowyIfEnabled), GenerationStep.Feature.VEGETAL_DECORATION, ModPlacedFeatures.BERRY_PATCH_PLACED_KEY);
 
         //TOP LAYER MODIFICATION
         if(WildSproutPlains.CONFIG.LayeredSnowEnabled) {
@@ -72,44 +83,52 @@ public class ModWorldGeneration {
         //BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS), GenerationStep.Feature.TOP_LAYER_MODIFICATION, ModPlacedFeatures.SMALL_RIVER_PLACED_KEY);
 
         //MODIFY FEATURES
-        BiomeModifications.create(WildSproutPlains.identifier("pumpkin_patch"))
-                .add(ModificationPhase.REPLACEMENTS,
-                        BiomeSelectors.includeByKey(normalIfEnabled),
-                        context -> {
-                            // Identify the original feature to replace.
-                            context.getGenerationSettings().removeFeature(
-                                    GenerationStep.Feature.VEGETAL_DECORATION,
-                                    VegetationPlacedFeatures.PATCH_PUMPKIN
-                            );
-                            // Add new custom pumpkin patch feature.
-                            context.getGenerationSettings().addFeature(
-                                    GenerationStep.Feature.VEGETAL_DECORATION,
-                                    ModPlacedFeatures.PUMPKIN_PATCH_PLACED_KEY
-                            );
-                        }
-                );
+        if(WildSproutPlains.CONFIG.ImprovedPumpkinPatch) {
+            BiomeModifications.create(WildSproutPlains.identifier("pumpkin_patch"))
+                    .add(ModificationPhase.REPLACEMENTS,
+                            BiomeSelectors.includeByKey(normalIfEnabled),
+                            context -> {
+                                // Identify the original feature to replace.
+                                context.getGenerationSettings().removeFeature(
+                                        GenerationStep.Feature.VEGETAL_DECORATION,
+                                        VegetationPlacedFeatures.PATCH_PUMPKIN
+                                );
+                                // Add new custom pumpkin patch feature.
+                                context.getGenerationSettings().addFeature(
+                                        GenerationStep.Feature.VEGETAL_DECORATION,
+                                        ModPlacedFeatures.PUMPKIN_PATCH_PLACED_KEY
+                                );
+                            }
+                    );
+        }
+
 
         // REMOVE FEATURES
-        BiomeModifications.create(WildSproutPlains.identifier("no_lava_spring")).add( ModificationPhase.REMOVALS,BiomeSelectors.includeByKey(allEnabled),
-                context -> {
-                    context.getGenerationSettings().removeFeature(
-                            GenerationStep.Feature.FLUID_SPRINGS, MiscPlacedFeatures.SPRING_LAVA);});
+        if(!WildSproutPlains.CONFIG.AllowLavaGenInPlains) {
+            BiomeModifications.create(WildSproutPlains.identifier("no_lava_spring")).add( ModificationPhase.REMOVALS,BiomeSelectors.includeByKey(allEnabled),
+                    context -> {
+                        context.getGenerationSettings().removeFeature(
+                                GenerationStep.Feature.FLUID_SPRINGS, MiscPlacedFeatures.SPRING_LAVA);});
 
-        BiomeModifications.create(WildSproutPlains.identifier("no_lava_lake_surface")).add( ModificationPhase.REMOVALS,BiomeSelectors.includeByKey(allEnabled),
-                context -> {
-                    context.getGenerationSettings().removeFeature(
-                            GenerationStep.Feature.LAKES, MiscPlacedFeatures.LAKE_LAVA_SURFACE);});
+            BiomeModifications.create(WildSproutPlains.identifier("no_lava_lake_surface")).add( ModificationPhase.REMOVALS,BiomeSelectors.includeByKey(allEnabled),
+                    context -> {
+                        context.getGenerationSettings().removeFeature(
+                                GenerationStep.Feature.LAKES, MiscPlacedFeatures.LAKE_LAVA_SURFACE);});
 
-        BiomeModifications.create(WildSproutPlains.identifier("no_lava_lake_underground")).add( ModificationPhase.REMOVALS,BiomeSelectors.includeByKey(allEnabled),
-                context -> {
-                    context.getGenerationSettings().removeFeature(
-                            GenerationStep.Feature.LAKES, MiscPlacedFeatures.LAKE_LAVA_UNDERGROUND);});
+            BiomeModifications.create(WildSproutPlains.identifier("no_lava_lake_underground")).add( ModificationPhase.REMOVALS,BiomeSelectors.includeByKey(allEnabled),
+                    context -> {
+                        context.getGenerationSettings().removeFeature(
+                                GenerationStep.Feature.LAKES, MiscPlacedFeatures.LAKE_LAVA_UNDERGROUND);});
 
-        BiomeModifications.create(WildSproutPlains.identifier("no_flowers")).add( ModificationPhase.REMOVALS,BiomeSelectors.includeByKey(snowyIfEnabled),
-                context -> {
-                    context.getGenerationSettings().removeFeature(
-                            GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.FLOWER_DEFAULT);});
+        }
+
+        if(!WildSproutPlains.CONFIG.AllowFlowerGenInSnowyPlains) {
+            BiomeModifications.create(WildSproutPlains.identifier("no_flowers")).add( ModificationPhase.REMOVALS,BiomeSelectors.includeByKey(snowyIfEnabled),
+                    context -> {
+                        context.getGenerationSettings().removeFeature(
+                                GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.FLOWER_DEFAULT);});
 
 
-    }
+            }
+        }
 }
