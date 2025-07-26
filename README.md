@@ -1,6 +1,7 @@
 # WildSprout: Plains
 A mod that improves the vanilla plains biome
 
+**!! Neoforge requires Sinytra Connector !!**
 ## FEATURES
 - small ponds
 - wheat patches
@@ -18,9 +19,8 @@ A mod that improves the vanilla plains biome
 
 ## CONFIGURATION
 This mod has a config in the config folder,
-you can currently disable each affected biome and some of the features
-
-After editing you have to restart the game to apply changes!!
+you can currently disable each affected biome
+and disable the generation of each feature.
 
 ## License
 Please refer to the [LICENSE.md](https://github.com/warior456/WildSprout-Plains/blob/master/LICENSE.md) file for licensing details.
