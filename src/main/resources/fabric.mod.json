@@ -17,13 +17,13 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"net.ugi.wildsprout.WildSproutPlains"
+			"net.ugi.wildsprout_plains.WildSproutPlains"
 		],
 		"client": [
-			"net.ugi.wildsprout.WildSproutPlainsClient"
+			"net.ugi.wildsprout_plains.WildSproutPlainsClient"
 		],
 		"fabric-datagen": [
-			"net.ugi.wildsprout.WildSproutPlainsDataGenerator"
+			"net.ugi.wildsprout_plains.WildSproutPlainsDataGenerator"
 		]
 	},
 	"mixins": [
