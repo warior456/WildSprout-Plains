@@ -9,6 +9,7 @@ import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.RandomPatchFeatureConfig;
 import net.minecraft.world.gen.feature.util.FeatureContext;
+import net.ugi.wildsprout_plains.tags.ModTags;
 
 public class PumpkinPatch extends Feature<RandomPatchFeatureConfig> {
     public PumpkinPatch(Codec<RandomPatchFeatureConfig> codec) {
@@ -39,7 +40,7 @@ public class PumpkinPatch extends Feature<RandomPatchFeatureConfig> {
             //leaves
             for (int m = 0; m < 4; m++) {
                 mutablePos2.set(blockPos, random.nextInt(j+2) - random.nextInt(j+2), random.nextInt(k+1) - random.nextInt(k+1), random.nextInt(j+2) - random.nextInt(j+2));
-                if((structureWorldAccess.getBlockState(mutablePos2).getBlock() == Blocks.AIR) && (structureWorldAccess.getBlockState(mutablePos2.down()).getBlock() == Blocks.GRASS_BLOCK ||
+                if((structureWorldAccess.getBlockState(mutablePos2).getBlock() == Blocks.AIR) && (structureWorldAccess.getBlockState(mutablePos2.down()).isIn(ModTags.Blocks.VALID_PLAINS_GENERATE_BLOCK) ||
                                                                                                     structureWorldAccess.getBlockState(mutablePos2.down()).getBlock() == Blocks.PUMPKIN) ) {
                     structureWorldAccess.setBlockState(mutablePos2, Blocks.OAK_LEAVES.getDefaultState().with(LeavesBlock.PERSISTENT, true), 2);
                 }
@@ -49,13 +50,13 @@ public class PumpkinPatch extends Feature<RandomPatchFeatureConfig> {
             for (int m = 0; m < 3; m++) {
                 //ferns
                 mutablePos3.set(blockPos, random.nextInt(j+2) - random.nextInt(j+2), random.nextInt(k+1) - random.nextInt(k+1), random.nextInt(j+2) - random.nextInt(j+2));
-                if((structureWorldAccess.getBlockState(mutablePos3).getBlock() == Blocks.AIR) && (structureWorldAccess.getBlockState(mutablePos3.down()).getBlock() == Blocks.GRASS_BLOCK) ) {
+                if((structureWorldAccess.getBlockState(mutablePos3).getBlock() == Blocks.AIR) && (structureWorldAccess.getBlockState(mutablePos3.down()).isIn(ModTags.Blocks.VALID_PLAINS_GENERATE_BLOCK))) {
                     structureWorldAccess.setBlockState(mutablePos3, Blocks.FERN.getDefaultState(), 2);
                 }
 
                 //big ferns
                 mutablePos4.set(blockPos, random.nextInt(j+2) - random.nextInt(j+2), random.nextInt(k+1) - random.nextInt(k+1), random.nextInt(j+2) - random.nextInt(j+2));
-                if((structureWorldAccess.getBlockState(mutablePos4).getBlock() == Blocks.AIR) && (structureWorldAccess.getBlockState(mutablePos4.up()).getBlock() == Blocks.AIR) && (structureWorldAccess.getBlockState(mutablePos4.down()).getBlock() == Blocks.GRASS_BLOCK) ) {
+                if((structureWorldAccess.getBlockState(mutablePos4).getBlock() == Blocks.AIR) && (structureWorldAccess.getBlockState(mutablePos4.up()).getBlock() == Blocks.AIR) && (structureWorldAccess.getBlockState(mutablePos4.down()).isIn(ModTags.Blocks.VALID_PLAINS_GENERATE_BLOCK)) ) {
                     structureWorldAccess.setBlockState(mutablePos4,Blocks.LARGE_FERN.getDefaultState().with(TallPlantBlock.HALF, DoubleBlockHalf.LOWER),2);
                     structureWorldAccess.setBlockState(mutablePos4.up(),Blocks.LARGE_FERN.getDefaultState().with(TallPlantBlock.HALF, DoubleBlockHalf.UPPER),2);
                 }

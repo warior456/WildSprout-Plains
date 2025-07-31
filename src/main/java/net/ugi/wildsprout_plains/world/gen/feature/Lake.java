@@ -7,19 +7,24 @@ import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.SmallDripleafBlock;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.noise.DoublePerlinNoiseSampler;
 import net.minecraft.util.math.random.CheckedRandom;
 import net.minecraft.util.math.random.ChunkRandom;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.chunk.ChunkStatus;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
 import net.ugi.wildsprout_plains.tags.ModTags;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static net.minecraft.state.property.Properties.WATERLOGGED;
 
@@ -155,7 +160,18 @@ public class Lake extends Feature<DefaultFeatureConfig> {
         BlockPos center = context.getOrigin();
         StructureWorldAccess structureWorldAccess = context.getWorld();
 
-        int j = structureWorldAccess.getChunk(new BlockPos(center.getX(),center.getY(),center.getZ())).getHeightmap(Heightmap.Type.WORLD_SURFACE_WG).get((32+center.getX()%16)%16, (32+center.getZ()%16)%16);
+
+        // populate heighmaps
+        ChunkPos centerchunk = structureWorldAccess.getChunk(center).getPos();
+        for (int i = -1; i < 2; i++){
+            for(int k = -1; k < 2; k++){
+                //structureWorldAccess.getChunk(centerchunk.x + i, centerchunk.z + k, ChunkStatus.FEATURES, true).getHeightmap(Heightmap.Type.WORLD_SURFACE);
+                Heightmap.populateHeightmaps(structureWorldAccess.getChunk(centerchunk.x + i, centerchunk.z + k), EnumSet.of(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES));
+
+            }
+        }
+
+        int j = structureWorldAccess.getChunk(new BlockPos(center.getX(),center.getY(),center.getZ())).getHeightmap(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES).get((32+center.getX()%16)%16, (32+center.getZ()%16)%16);
 
         center = new BlockPos(center.getX(),j,center.getZ());
 
@@ -176,7 +192,9 @@ public class Lake extends Feature<DefaultFeatureConfig> {
         int[] heightmap = new int[firstAirLayer.size()];
         final int[] i = {0};
         firstAirLayer.forEach((pos) -> {
-            heightmap[i[0]] = structureWorldAccess.getChunk(new BlockPos(pos.getX(),pos.getY(),pos.getZ())).getHeightmap(Heightmap.Type.WORLD_SURFACE_WG).get((32+pos.getX()%16)%16, (32+pos.getZ()%16)%16);
+            //heightmap[i[0]] = structureWorldAccess.getChunk(new BlockPos(pos.getX(),pos.getY(),pos.getZ())).getHeightmap(Heightmap.Type.OCEAN_FLOOR).get((32+pos.getX()%16)%16, (32+pos.getZ()%16)%16);
+            //todo: make own heightmap checker
+            heightmap[i[0]] = structureWorldAccess.getTopY(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,pos.getX(),pos.getZ());
             if (structureWorldAccess.getBlockState(new BlockPos(pos.getX(),heightmap[i[0]]-1,pos.getZ())).equals(Blocks.WATER.getDefaultState()))  heightmap[i[0]] = -65;
             i[0]++;
         });
@@ -191,12 +209,12 @@ public class Lake extends Feature<DefaultFeatureConfig> {
         for (int a = 0; a < heightmap.length; a++) {
             if (heightmap[a] > highest) highest = heightmap[a];
         }
-
-       //System.out.println("pos " + pos.getY() + "highest " + highest + " lowest " + lowest);
-
+        //System.out.println("pos " + pos.getY() + "highest " + highest + " lowest " + lowest);
         //cancel if area not flat enough
         if (highest > center.getY()+2) return false;
         if (lowest < center.getY()-1) return false;
+
+
 
         //-----------------------------------------------------------
 
@@ -278,7 +296,7 @@ public class Lake extends Feature<DefaultFeatureConfig> {
         for (int a = 0; a < bushCount; a++) {
             int index = random.nextInt(grassCloseToLake.size());
             BlockPos pos = grassCloseToLake.get(index);
-            j = structureWorldAccess.getChunk(new BlockPos(pos.getX(),pos.getY(),pos.getZ())).getHeightmap(Heightmap.Type.WORLD_SURFACE_WG).get((32+pos.getX()%16)%16, (32+pos.getZ()%16)%16);
+            j = structureWorldAccess.getChunk(new BlockPos(pos.getX(),pos.getY(),pos.getZ())).getHeightmap(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES).get((32+pos.getX()%16)%16, (32+pos.getZ()%16)%16);
             pos = new BlockPos(pos.getX(),j,pos.getZ());
             Bushes bushGenerator = new Bushes(DefaultFeatureConfig.CODEC);
             bushGenerator.generateBush(structureWorldAccess,random,pos,noise);

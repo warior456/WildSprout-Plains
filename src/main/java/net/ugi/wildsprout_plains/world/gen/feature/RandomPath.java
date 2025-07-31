@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.StructureWorldAccess;
@@ -25,16 +26,16 @@ public class RandomPath extends Feature<DefaultFeatureConfig> {
     private Vec3d pos3;
     private int steps;
 
-    public Vec3d getCurvePos(double t, StructureWorldAccess structureWorldAccess){
+    public Vec3i getCurvePos(double t, StructureWorldAccess structureWorldAccess){
 
         double x_d = (1-t)*((1-t)*((1-t)*this.pos0.x + t*this.pos1.x) + t*((1-t)*this.pos1.x + t*this.pos2.x)) + t*((1-t)*((1-t)*this.pos1.x + t*this.pos2.x) + t*((1-t)*this.pos2.x + t*this.pos3.x));
         double z_d = (1-t)*((1-t)*((1-t)*this.pos0.z + t*this.pos1.z) + t*((1-t)*this.pos1.z + t*this.pos2.z)) + t*((1-t)*((1-t)*this.pos1.z + t*this.pos2.z) + t*((1-t)*this.pos2.z + t*this.pos3.z));
         int x = (int)Math.round(x_d);
         int z = (int)Math.round(z_d);
 
-        int j = structureWorldAccess.getChunk(new BlockPos(x,0,z)).getHeightmap(Heightmap.Type.WORLD_SURFACE_WG).get((32+x%16)%16, (32+z%16)%16);
+        int j = structureWorldAccess.getChunk(new BlockPos(x,0,z)).getHeightmap(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES).get((32+x%16)%16, (32+z%16)%16);
 
-        return new Vec3d(x,j-1,z);
+        return new Vec3i(x,j-1,z);
 
     }
 
@@ -43,11 +44,9 @@ public class RandomPath extends Feature<DefaultFeatureConfig> {
 
         for(int i = 0 ; i < this.steps; i++) {
             double t = i/(double)(this.steps-1);// -1 so tah the last one is t = 1
-            Vec3d vec = getCurvePos(t, structureWorldAccess);
-            int x = vec.x < 0 ? (int)(vec.x) - 1 : (int)(vec.x);
-            int y = vec.y < 0 ? (int)(vec.y) - 1 : (int)(vec.y) ;
-            int z = vec.z < 0 ? (int)(vec.z) - 1 : (int)(vec.z);
-            blockPosArray[i] = new BlockPos(x,y,z);
+            Vec3i vec = getCurvePos(t, structureWorldAccess);
+
+            blockPosArray[i] = new BlockPos(vec.getX(),vec.getY(),vec.getZ());
         }
 
         return blockPosArray;

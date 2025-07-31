@@ -51,7 +51,7 @@ public class SmallRiver extends Feature<DefaultFeatureConfig> {
         ChunkRandom chunkRandom = new ChunkRandom(new CheckedRandom(structureWorldAccess.getSeed()));
         DoublePerlinNoiseSampler noise = DoublePerlinNoiseSampler.create(chunkRandom, -2, new double[]{2});
 
-        int height = structureWorldAccess.getChunk(new BlockPos(startPos.getX(),startPos.getY(),startPos.getZ())).getHeightmap(Heightmap.Type.WORLD_SURFACE_WG).get((32+startPos.getX()%16)%16, (32+startPos.getZ()%16)%16);
+        int height = structureWorldAccess.getChunk(new BlockPos(startPos.getX(),startPos.getY(),startPos.getZ())).getHeightmap(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES).get((32+startPos.getX()%16)%16, (32+startPos.getZ()%16)%16);
         startPos = new BlockPos(startPos.getX(),height,startPos.getZ());
 
         if (!(structureWorldAccess.getBlockState(startPos.down()).equals(Blocks.GRASS_BLOCK.getDefaultState()))) return false;
@@ -79,7 +79,7 @@ public class SmallRiver extends Feature<DefaultFeatureConfig> {
 //        boolean[][] heightmap = new boolean[15][15];
 //        for (int i = 0; i < 15; i++) {
 //            for (int k = 0; k < 15; k++) {
-//                heightmap[i][k] = structureWorldAccess.getChunk(new BlockPos(x+i-7,y,z+k-7)).getHeightmap(Heightmap.Type.WORLD_SURFACE_WG).get((32+i-7+x%16)%16, (32+k-7+z%16)%16) < height;
+//                heightmap[i][k] = structureWorldAccess.getChunk(new BlockPos(x+i-7,y,z+k-7)).getHeightmap(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES).get((32+i-7+x%16)%16, (32+k-7+z%16)%16) < height;
 //            }
 //        }
 //
@@ -108,7 +108,7 @@ public class SmallRiver extends Feature<DefaultFeatureConfig> {
 //            }
 //        }
 //
-//        height = structureWorldAccess.getChunk(newPos).getHeightmap(Heightmap.Type.WORLD_SURFACE_WG).get((32+newPos.getX()%16)%16, (32+newPos.getZ()%16)%16);
+//        height = structureWorldAccess.getChunk(newPos).getHeightmap(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES).get((32+newPos.getX()%16)%16, (32+newPos.getZ()%16)%16);
 //        newPos = new BlockPos(newPos.getX(),height,newPos.getZ());
 //
 //        this.setBlockState(structureWorldAccess, newPos, Blocks.GOLD_BLOCK.getDefaultState());

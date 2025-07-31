@@ -208,7 +208,7 @@ public class RiverGenerator {
 
             BlockPos startPos = chunkBox.getCenter();
 
-            int height = world.getChunk(new BlockPos(startPos.getX(),startPos.getY(),startPos.getZ())).getHeightmap(Heightmap.Type.WORLD_SURFACE_WG).get((32+startPos.getX()%16)%16, (32+startPos.getZ()%16)%16);
+            int height = world.getChunk(new BlockPos(startPos.getX(),startPos.getY(),startPos.getZ())).getHeightmap(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES).get((32+startPos.getX()%16)%16, (32+startPos.getZ()%16)%16);
             startPos = new BlockPos(startPos.getX(),height,startPos.getZ());
             world.setBlockState(startPos,Blocks.DIAMOND_BLOCK.getDefaultState(),2);
 

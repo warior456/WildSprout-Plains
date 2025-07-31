@@ -76,7 +76,7 @@ public class Bushes extends Feature<DefaultFeatureConfig> {
             int x = pos.getX() + rand.nextBetween(-10, 10);
             int z = pos.getZ() + rand.nextBetween(-10, 10);
             int y = pos.getY() + rand.nextBetween(-10, 10);
-            y = structureWorldAccess.getChunk(new BlockPos(x,y,z)).getHeightmap(Heightmap.Type.WORLD_SURFACE_WG).get((32+x%16)%16, (32+z%16)%16);
+            y = structureWorldAccess.getChunk(new BlockPos(x,y,z)).getHeightmap(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES).get((32+x%16)%16, (32+z%16)%16);
             placements.add(new BlockPos(x,y,z));
         }
 

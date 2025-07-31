@@ -34,7 +34,7 @@ public class RiverStructure extends Structure {
         start = new RiverGenerator.Start(context.random(), context.chunkPos().getOffsetX(x_offset), context.chunkPos().getOffsetZ(z_offset));
         collector.addPiece(start);
 
-        int y_coord = context.chunkGenerator().getHeight(context.chunkPos().x*16+x_offset,context.chunkPos().z*16+z_offset, Heightmap.Type.WORLD_SURFACE_WG,context.world(),context.noiseConfig());
+        int y_coord = context.chunkGenerator().getHeight(context.chunkPos().x*16+x_offset,context.chunkPos().z*16+z_offset, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,context.world(),context.noiseConfig());
         collector.shiftInto(y_coord, y_coord, context.random(), 0);
 
 
@@ -59,7 +59,7 @@ public class RiverStructure extends Structure {
 //                StructurePiece structurePiece = (StructurePiece)list.remove(j);
 //                structurePiece.fillOpenings(start, collector, context.random());
 //            }
-//            int y_coord = context.chunkGenerator().getHeight(context.chunkPos().x*16,context.chunkPos().z*16, Heightmap.Type.WORLD_SURFACE_WG,context.world(),context.noiseConfig());
+//            int y_coord = context.chunkGenerator().getHeight(context.chunkPos().x*16,context.chunkPos().z*16, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,context.world(),context.noiseConfig());
 //            collector.shiftInto(y_coord, y_coord, context.random(), 0);
 //        } while(collector.isEmpty() /*|| start.lake == null*/);
 
