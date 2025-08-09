@@ -28,7 +28,6 @@ public class WildSproutPlains implements ModInitializer {
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
 
-		LOGGER.info("Hello Fabric world!");
 		WildSproutPlains.LOGGER.info("Loading Config for " + WildSproutPlains.MOD_ID);
 		Config.loadConfig();
 		ModFeatures.init();

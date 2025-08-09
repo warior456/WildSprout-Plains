@@ -1,41 +1,14 @@
-# WildSprout License V1
+# WildSprout License V2
 
-### 0. Definitions
-
-“Code” refers to:
-1. Any file found in the `.../resources/data/...` directory
-2. Shader files, which refers to
-    1. Files ending in `.vsh`, `.fsh` and `.glsl`
-3. Build scripts, which refers to
-    1. Files ending in `.gradle`, `.gradle.kts`, `.properties`, `.bat`, and `.gitignore`
-4. Source files, which refers to
-    1. Files ending in `.java`, `.kt`, `.dart`, `.html`, `.xml` and `.cs`
-5. Script files, which refers to
-    1. Files ending in `.js`, `.ts`, `.py`, `.kts` and `.css`
-6. Documentation files, which refers to
-    1. Files ending in `.md`, `.txt`, `.pdf`, `.rtf`, `.doc`, `.docx` and `.csv`
-7. Configuration files, which refers to
-    1. Files ending in `.yml`, `.toml`, and `.mcmeta`
-    2. Files named `fabric.mod.json` or `mods.toml` or `quilt.mod.json`
-8. Exceptions are:
-    1. Files ending in `.nbt`
-
-### 1. Code
-Per the definitions above, Code is licensed under the Apache-2.0 License, as found in the appendix
-
-### 2. Non-Code
-
-Per the definitions above, Everything that is not defined as Code is "All Rights Reserved"
-
-### 3. ModPacks
+### 1. ModPacks
 
 This mod is allowed to be included in any modpack hosted on curseforge or modrinth
 
-### 4. Redistribution
+### 2. Redistribution
 
 This mod's files are not allowed to be hosted anywhere else than the official Github, official Modrinth or official Curseforge page
 
-### Appendix
+### 3. General license
 #### Apache-2.0
 
                                  Apache License

@@ -9,6 +9,7 @@ A mod that improves the vanilla plains biome
 - small stones
 - boulders
 - coarse dirt patches
+- small wildlife paths
 - upgraded pumpkin patches
 - snow generates in layers and on top of ice now
 

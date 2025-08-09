@@ -12,7 +12,7 @@
 		"issues": "https://github.com/warior456/WildSprout-Plains/issues",
 		"sources": "https://github.com/warior456/WildSprout-Plains"
 	},
-	"license": "WildSprout-Plains v1",
+	"license": "WildSprout-Plains v2",
 	"icon": "assets/wildsprout-plains/icon.png",
 	"environment": "*",
 	"entrypoints": {
