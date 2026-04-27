@@ -7,6 +7,8 @@ import net.minecraft.registry.RegistryKeys;
 import net.ugi.wildsprout_plains.datagen.*;
 import net.ugi.wildsprout_plains.world.gen.ModConfiguredFeatures;
 import net.ugi.wildsprout_plains.world.gen.ModPlacedFeatures;
+import net.ugi.wildsprout_plains.world.gen.ModStructureSets;
+import net.ugi.wildsprout_plains.world.gen.ModStructures;
 
 public class WildSproutPlainsDataGenerator implements DataGeneratorEntrypoint {
 	@Override
@@ -24,5 +26,7 @@ public class WildSproutPlainsDataGenerator implements DataGeneratorEntrypoint {
 	public void buildRegistry(RegistryBuilder registryBuilder) {
 		registryBuilder.addRegistry(RegistryKeys.CONFIGURED_FEATURE, ModConfiguredFeatures::bootstrap);
 		registryBuilder.addRegistry(RegistryKeys.PLACED_FEATURE, ModPlacedFeatures::bootstrap);
+		registryBuilder.addRegistry(RegistryKeys.STRUCTURE, ModStructures::bootstrap);
+		registryBuilder.addRegistry(RegistryKeys.STRUCTURE_SET, ModStructureSets::bootstrap);
 	}
 }

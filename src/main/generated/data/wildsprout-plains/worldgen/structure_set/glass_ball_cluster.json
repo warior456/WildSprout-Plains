@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 14781234,
+    "separation": 22,
+    "spacing": 52
+  },
+  "structures": [
+    {
+      "structure": "wildsprout-plains:glass_ball_cluster",
+      "weight": 1
+    }
+  ]
+}

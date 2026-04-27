@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 14640215,
+    "separation": 12,
+    "spacing": 30
+  },
+  "structures": [
+    {
+      "structure": "wildsprout-plains:floating_island",
+      "weight": 1
+    }
+  ]
+}
